@@ -1,0 +1,42 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+    jruby
+}
+
+dependencies {
+    jruby 'org.jruby:jruby-complete:1.7.4'
+}
+
+ext {
+    gemsDir = file('vendor/gems')
+}
+
+task installBundler(type: JavaExec) {
+    outputs.dir gemsDir
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+    args "-S gem install --no-rdoc --no-ri bundler -i ${gemsDir}".tokenize()
+
+    doFirst {
+        gemsDir.mkdirs()
+    }
+}
+
+
+task bundleInstall(type: JavaExec) {
+    environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
+    
+
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+    args "-S bundle install --path=vendor/bundle --binstubs".tokenize()
+
+    doFirst {
+        gemsDir.mkdirs()
+    }
+}
