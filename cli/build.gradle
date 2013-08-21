@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+repositories {
+   // maven {
+   //      url 'http://dl.bintray.com/narkisr/narkisr-jars'
+   //  }
+  
+  flatDir {
+    dirs 'lib'
+  }
+}
+
+dependencies {
+  compile group: 'openjdk' , name:'rhino', version:'7'
+}
