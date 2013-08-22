@@ -33,31 +33,25 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
     classpath = configurations.jruby
     main = "org.jruby.Main"
     args "-S bundle install --path=vendor/bundle --binstubs".tokenize()
-
-    doFirst {
-        gemsDir.mkdirs()
-    }
 }
 
-task jrubyComplete(type: JavaExec){
-    environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
+task runapp(type: JavaExec){
     classpath = configurations.jruby
     main = "org.jruby.Main"
-    args "-S lib/test.rb".tokenize()
-
-    doFirst {
-	gemsDir.mkdirs()
-    }
+    args "-S bin/test".tokenize()
 }
 
+task puck(type: JavaExec){
+    environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+    args "-S bin/puck --extra-files views/**".tokenize()
+
+}
 
 task gemList(type: JavaExec){
     environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
     classpath = configurations.jruby
     main = "org.jruby.Main"
     args "-S gem list".tokenize()
-
-    doFirst {
-	gemsDir.mkdirs()
-    }
 }
