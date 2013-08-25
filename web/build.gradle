@@ -1,8 +1,6 @@
 apply plugin: 'java'
 
-repositories {
-  mavenCentral()
-}
+version = '1.0'
 
 configurations {
     jruby
@@ -38,15 +36,20 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
 task runapp(type: JavaExec){
     classpath = configurations.jruby
     main = "org.jruby.Main"
-    args "-S bin/test".tokenize()
+    args "-S bin/app".tokenize()
 }
 
-task puck(type: JavaExec){
-    environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
-    classpath = configurations.jruby
-    main = "org.jruby.Main"
-    args "-S bin/puck --extra-files views/**".tokenize()
+task vendorJars(type: Copy) {
+    from project(':cli').jar.outputs.files
+    // from project(':cli').configurations.compile
+    into 'vendor/jars'
+}
 
+task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
+  environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
+  classpath = configurations.jruby
+  main = "org.jruby.Main"
+  args "-S bin/puck --extra-files views/** public/** vendor/jars/**".tokenize()
 }
 
 task gemList(type: JavaExec){
@@ -55,3 +58,4 @@ task gemList(type: JavaExec){
     main = "org.jruby.Main"
     args "-S gem list".tokenize()
 }
+
