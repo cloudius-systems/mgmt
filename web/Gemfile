@@ -1,10 +1,8 @@
-# ruby '1.9.3', :engine => 'jruby', :engine_version => '1.7.4'
-
 source "https://rubygems.org"
 
 gem 'sinatra'
+gem 'puma'
 gem 'haml'
-gem 'erubis'
 gem 'jruby-jars', '= 1.7.4'
 
 group :development do
