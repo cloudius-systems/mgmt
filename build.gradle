@@ -1,0 +1,7 @@
+allprojects {
+  repositories {
+    mavenCentral()
+    mavenRepo(url:'http://dl.bintray.com/content/narkisr/narkisr-jars/')
+  }
+}
+
