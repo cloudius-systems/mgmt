@@ -11,8 +11,8 @@ dependencies {
 }
 
 ext {
-    gemsDir = file('vendor/gems')
-    bundleDir = file('vendor/bundle/jruby/1.9/')
+    gemsDir = file(project.projectDir.path + 'vendor/gems')
+    bundleDir = file(project.projectDir.path +'vendor/bundle/jruby/1.9/')
 }
 
 task installBundler(type: JavaExec) {
