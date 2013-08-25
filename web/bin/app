@@ -1,17 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
 require 'sinatra'
 require 'haml'
 
-set :bind, '0.0.0.0'
-set :port, 4567
-set :views, 'views'
+class App < Sinatra::Base
 
-get '/' do
-  @pg = "index"
-  haml :index
+ configure { set :server, :puma }
+ set :bind, '0.0.0.0'
+ set :port, 4567
+ set :views, 'views'
+ set :public_folder, 'public'
+
+ get '/' do
+   haml :index
+ end
+
+ get "/upload" do
+   haml :upload
+ end       
+   
+ # Handle POST-request (Receive and save the uploaded file)
+ post "/upload" do  
+   File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+     f.write(params['myfile'][:tempfile].read) 
+   end
+  return "The file was successfully uploaded!"
+ end
 end
 
-get '/:pg' do |p|
-  @pg = p
-  haml :index
+t = Thread.new do 
+  App.run! 
 end
+
+500.times {|i| puts i; sleep(1)}
