@@ -3,6 +3,12 @@
 
 require 'sinatra'
 require 'haml'
+require 'java'
+# only in prod
+
+require '/java/cli-1.0.jar' if(ARGV[0].eql?('prod'))
+
+java_import com.cloudius.cli.main.RhinoCLI
 
 class App < Sinatra::Base
 
@@ -22,7 +28,7 @@ class App < Sinatra::Base
    
  # Handle POST-request (Receive and save the uploaded file)
  post "/upload" do  
-   File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+   File.open('/uploads/' + params['myfile'][:filename], "w") do |f|
      f.write(params['myfile'][:tempfile].read) 
    end
   return "The file was successfully uploaded!"
@@ -33,4 +39,5 @@ t = Thread.new do
   App.run! 
 end
 
-500.times {|i| puts i; sleep(1)}
+RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, [])
+# 500.times {|i| puts i; sleep(1)}

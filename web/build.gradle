@@ -34,18 +34,17 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
 }
 
 task runapp(type: JavaExec){
-    classpath = configurations.jruby
+    classpath = project(':cli').jar.outputs.files.plus(configurations.jruby)
     main = "org.jruby.Main"
     args "-S bin/app".tokenize()
 }
 
 task vendorJars(type: Copy) {
     from project(':cli').jar.outputs.files
-    // from project(':cli').configurations.compile
     into 'vendor/jars'
 }
 
-task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
+task jar(type: JavaExec, overwrite: true,dependsOn:['bundleInstall','vendorJars']) {
   environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
   classpath = configurations.jruby
   main = "org.jruby.Main"
@@ -54,7 +53,7 @@ task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
 
 task gemList(type: JavaExec){
     environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
-    classpath = configurations.jruby
+    classpath = project(':cli').jar.outputs.files.plus(configurations.jruby)
     main = "org.jruby.Main"
     args "-S gem list".tokenize()
 }
