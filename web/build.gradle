@@ -27,7 +27,7 @@ task installBundler(type: JavaExec) {
 }
 
 task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
-    environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
+    environment GEM_HOME: gemsDir, GEM_PATH: gemsDir, PATH: "${gemsDir}/bin/"
     classpath = configurations.jruby
     main = "org.jruby.Main"
     args "-S bundle install --path=${project.projectDir.path}/vendor/bundle --binstubs".tokenize()
