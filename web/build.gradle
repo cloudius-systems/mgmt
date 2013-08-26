@@ -39,12 +39,7 @@ task runapp(type: JavaExec){
     args "-S bin/app".tokenize()
 }
 
-task vendorJars(type: Copy) {
-    from project(':cli').jar.outputs.files
-    into 'vendor/jars'
-}
-
-task jar(type: JavaExec, overwrite: true,dependsOn:['bundleInstall','vendorJars']) {
+task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
   environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
   classpath = configurations.jruby
   main = "org.jruby.Main"
