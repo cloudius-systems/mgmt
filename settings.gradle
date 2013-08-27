@@ -1,1 +1,1 @@
-include 'web', 'cli'
+include 'web', 'sshd', 'cli'

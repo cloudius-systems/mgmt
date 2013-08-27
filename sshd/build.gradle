@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+version = '1.0'
+
+dependencies {
+  compile project(':cli')
+  compile 'bouncycastle:bcprov-jdk15:140' 
+  compile 'org.apache.mina:mina-core:2.0.5' 
+  compile 'org.slf4j:slf4j-api:1.7.5' 
+  compile 'org.slf4j:slf4j-simple:1.7.5' 
+  compile 'org.apache.sshd:sshd-core:0.8.0' 
+  compile 'org.apache.sshd:sshd-pam:0.8.0' 
+  compile 'tomcat:tomcat-apr:5.5.23'
+}
+
+
+project.build.dependsOn << 'depsCopy'
+
+task depsCopy(type: Copy) {
+  into "$buildDir/deps/"
+  from configurations.compile
+}
