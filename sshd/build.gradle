@@ -13,10 +13,9 @@ dependencies {
   compile 'tomcat:tomcat-apr:5.5.23'
 }
 
-
-project.build.dependsOn << 'depsCopy'
-
-task depsCopy(type: Copy) {
-  into "$buildDir/deps/"
-  from configurations.compile
+jar {
+    dependsOn configurations.runtime
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude('META-INF/BCKEY.*') 
+    manifest.attributes('Main-Class': 'com.cloudius.sshd.Server')
 }
