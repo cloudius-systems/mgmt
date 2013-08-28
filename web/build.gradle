@@ -11,8 +11,8 @@ dependencies {
 }
 
 ext {
-    gemsDir = file(project.projectDir.path + '/vendor/gems')
-    bundleDir = file(project.projectDir.path +'/vendor/bundle/jruby/1.9/')
+    gemsDir = file(projectDir.path + '/vendor/gems')
+    bundleDir = file(projectDir.path +'/vendor/bundle/jruby/1.9/')
 }
 
 task installBundler(type: JavaExec) {
@@ -29,6 +29,8 @@ task installBundler(type: JavaExec) {
 task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
     environment GEM_HOME: gemsDir, GEM_PATH: gemsDir, PATH: "${gemsDir}/bin/"
     classpath = configurations.jruby
+    inputs.file "${projectDir}/Gemfile"
+    outputs.dir "${projectDir}/vendor/bundle/"
     main = "org.jruby.Main"
     args "-S bundle install --path=${project.projectDir.path}/vendor/bundle --binstubs".tokenize()
 }
@@ -41,10 +43,15 @@ task runapp(type: JavaExec){
 
 task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
   environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
-  outputs.files "${buildDir}/web.jar"
+  inputs.dir "${projectDir}/bin"
+  outputs.file "${buildDir}/web.jar"
   classpath = configurations.jruby
   main = "org.jruby.Main"
   args "-S bin/puck --extra-files views/** public/**".tokenize()
+}
+
+task deleteVendor(type: Delete) {
+  delete "${project.projectDir.path}/vendor"
 }
 
 task gemList(type: JavaExec){
