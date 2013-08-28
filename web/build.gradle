@@ -41,6 +41,7 @@ task runapp(type: JavaExec){
 
 task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
   environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
+  outputs.files "${buildDir}/web.jar"
   classpath = configurations.jruby
   main = "org.jruby.Main"
   args "-S bin/puck --extra-files views/** public/**".tokenize()
