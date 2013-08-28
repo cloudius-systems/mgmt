@@ -17,4 +17,9 @@ Available tasks:
  $ ./gradlew :web:runapp
 ```
 
+# Adding new modules
+
+ * mkdir mgmt/${new-module}/src/main/java/com/ -p
+ * vi mgmt/settings.gradle (and the module name to the list)
+ * create a new mgmt/${new-module}/build.gradle file under the new module see mgmt/sshd/build.gradle as an example (ask [me](https://github.com/narkisr) if you need more guidance).
 
