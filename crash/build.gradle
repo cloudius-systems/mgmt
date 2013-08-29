@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+version = '1.0'
+
+dependencies {
+  compile  'org.bouncycastle:bcprov-jdk16:1.46'
+  compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
+  compile group: 'org.crsh' , name:'crsh.shell.ssh', version:'1.2.7'
+  compile group: 'org.crsh' , name:'crsh.shell.telnet', version:'1.2.7'
+  compile group: 'jline' , name:'jline', version:'2.10'
+}
+
+jar {
+    dependsOn configurations.runtime
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude('META-INF/BCKEY.*') 
+    manifest.attributes('Main-Class': 'org.crsh.cli.impl.bootstrap.Main')
+}
