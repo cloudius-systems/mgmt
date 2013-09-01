@@ -1,9 +1,13 @@
 allprojects {
   repositories {
-    mavenCentral()
     mavenRepo(url:'http://dl.bintray.com/content/narkisr/narkisr-jars/')
-    mavenRepo(url:'http://repository.exoplatform.org/content/repositories/crsh-releases/')
-    mavenRepo(url:'http://repository.exoplatform.org/content/repositories/public/')
+    maven {
+	url 'http://cloudius.artifactoryonline.com/cloudius/repo'
+      credentials {
+       username = 'reader'
+       password = 'oamahG7e'
+      }
+    }
   }
 }
 
