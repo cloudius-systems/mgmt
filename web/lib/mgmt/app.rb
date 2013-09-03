@@ -1,22 +1,30 @@
+require 'rubygems'
 require 'sinatra'
-require 'haml'
+require 'mustache/sinatra'
 require 'java'
 
 
 module Mgmt
   class App < Sinatra::Base
+    register Mustache::Sinatra
+    require 'views/layout'
+
+    set :mustache, {
+	:views     => 'views',
+	:templates => 'templates'
+    }
+
     configure { set :server, :puma }
     set :bind, '0.0.0.0'
     set :port, 8080
-    set :views, 'views'
     set :public_folder, 'public'
 
     get '/' do
-	haml :index
+	mustache :index
     end
 
     get "/upload" do
-	haml :upload
+	mustache :upload
     end       
 
     # Handle POST-request (Receive and save the uploaded file)

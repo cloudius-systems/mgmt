@@ -2,11 +2,13 @@
 # vi: set ft=ruby :
 
 $:.push 'lib'
+$:.push '.'
 require 'mgmt'
 
 def prod?
   ARGV[0].eql?('prod')
 end
+
 t = Thread.new do 
   Mgmt::App.run! 
 end

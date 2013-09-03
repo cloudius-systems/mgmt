@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem 'sinatra'
 gem 'puma'
-gem 'haml'
+gem 'mustache'
 gem 'jruby-jars', '= 1.7.4'
 
 group :development do
