@@ -30,6 +30,11 @@ module Mgmt
 	mustache :upload
     end       
 
+    get '/manage' do
+	mustache :manage
+    end       
+
+
     def save_file(params)
       h = params['files']
 	File.open("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}", 'w') do |dest|
