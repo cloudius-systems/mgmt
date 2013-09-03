@@ -10,3 +10,4 @@ web/bin/rackup
 web/bin/rake
 web/bin/tilt
 web/bin/haml
+web/bin/mustache
