@@ -30,18 +30,21 @@ module Mgmt
 	mustache :upload
     end       
 
-    # Handle POST-request (Receive and save the uploaded file)
-    post '/upload' do  
-	h = params['files']
-	File.open('/uploads/' + h[:filename], 'w') do |dest|
+    def save_file(params)
+      h = params['files']
+	File.open("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}", 'w') do |dest|
 	  dest.write(h[:tempfile].read) 
 	end
-	res = {"files"=> 
-              [ { "name" => h[:filename] , "size"=> 902604, "url"=> "http://example.org/files/picture1.jpg",
-			"thumbnailUrl"=> "http://fortawesome.github.io/Font-Awesome/icon/laptop",
-			"deleteUrl"=> "http:\/\/example.org\/files\/picture1.jpg", "deleteType"=> "DELETE" }]}
+	Mgmt::DeployUnit.new(h[:filename]).extract
+     h
+    end
 
-	return res.to_json
+    # returns a json has for jquery upload plugin
+    post '/deploy-interactive' do  
+     h = save_file(params)
+     size = File.size("/uploads/#{h[:filename]}")
+     file = {'name' => h[:filename], 'size'=> size , 'url'=> '', 'thumbnailUrl'=> '', 'deleteUrl'=> '', 'deleteType'=> '' }
+     return {'files'=> [file]}.to_json
     end
   end
 end
