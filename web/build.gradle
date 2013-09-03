@@ -8,6 +8,7 @@ configurations {
 
 dependencies {
     jruby 'org.jruby:jruby-complete:1.7.4'
+    runtime 'net.lingala.zip4j:zip4j:1.2.3'
 }
 
 ext {
