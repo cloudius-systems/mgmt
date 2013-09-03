@@ -1,43 +1,20 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'sinatra'
-require 'haml'
-require 'java'
-# only in prod
+$:.push 'lib'
+require 'mgmt'
 
-require '/java/cli-1.0.jar' if(ARGV[0].eql?('prod'))
-
-java_import com.cloudius.cli.main.RhinoCLI
-
-class App < Sinatra::Base
-
- configure { set :server, :puma }
- set :bind, '0.0.0.0'
- set :port, 4567
- set :views, 'views'
- set :public_folder, 'public'
-
- get '/' do
-   haml :index
- end
-
- get "/upload" do
-   haml :upload
- end       
-   
- # Handle POST-request (Receive and save the uploaded file)
- post "/upload" do  
-   File.open('/uploads/' + params['myfile'][:filename], "w") do |f|
-     f.write(params['myfile'][:tempfile].read) 
-   end
-  return "The file was successfully uploaded!"
- end
+def prod?
+  ARGV[0].eql?('prod')
 end
-
 t = Thread.new do 
-  App.run! 
+  Mgmt::App.run! 
 end
 
-RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, [])
-# 500.times {|i| puts i; sleep(1)}
+if(prod?)
+  require '/java/cli-1.0.jar' 
+  java_import com.cloudius.cli.main.RhinoCLI
+  RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, []) if prod?
+end
+
+t.join
