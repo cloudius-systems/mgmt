@@ -36,6 +36,7 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
 }
 
 task runapp(type: JavaExec){
+    environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
     classpath = project(':cli').jar.outputs.files.plus(configurations.jruby)
     main = "org.jruby.Main"
     args "bin/app".tokenize()
