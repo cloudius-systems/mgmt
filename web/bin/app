@@ -5,18 +5,14 @@ $:.push 'lib'
 $:.push '.'
 require 'mgmt'
 
-def prod?
-  ARGV[0].eql?('prod')
-end
-
 t = Thread.new do 
   Mgmt::App.run! 
 end
 
-if(prod?)
+if(Mgmt::Env.prod?)
   require '/java/cli-1.0.jar' 
   java_import com.cloudius.cli.main.RhinoCLI
-  RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, []) if prod?
+  RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, [])
 end
 
 t.join
