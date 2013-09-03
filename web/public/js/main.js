@@ -79,7 +79,6 @@ $('#fileupload').fileupload({ url: url, dataType: 'json', autoUpload: false, acc
 		  }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled'); });
 
 // setting active nav item
-
 $(document).ready(function () {
   $('.active').removeClass('active');
   var url = window.location;
