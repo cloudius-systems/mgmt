@@ -1,12 +1,24 @@
 
+require 'json'
+
+CONF = JSON.parse(File.open('mgmt.json').read, {:symbolize_names => true})
+
 module Mgmt
   module Env
+    def self.env_v
+	ARGV[0]
+    end
+
     def self.prod?
-	ARGV[0].eql?('prod')
+	env_v.eql?('prod')
     end
 
     def self.development? 
-	ARGV[0].eql?('dev')
+	env_v.eql?('dev')
+    end
+
+    def self.conf(k)
+      CONF[env_v.to_sym][k] 	
     end
   end
 end
