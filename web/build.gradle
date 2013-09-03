@@ -38,7 +38,7 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
 task runapp(type: JavaExec){
     classpath = project(':cli').jar.outputs.files.plus(configurations.jruby)
     main = "org.jruby.Main"
-    args "-S bin/app".tokenize()
+    args "bin/app".tokenize()
 }
 
 task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
