@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (3.3.3)
+    jmx4r (0.1.4)
     jruby-jars (1.7.4)
     multi_json (1.7.9)
     mustache (0.99.4)
@@ -33,6 +34,7 @@ PLATFORMS
   java
 
 DEPENDENCIES
+  jmx4r
   jruby-jars (= 1.7.4)
   mustache
   puck
