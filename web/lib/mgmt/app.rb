@@ -34,6 +34,9 @@ module Mgmt
 	mustache :manage
     end       
 
+    get '/monitor' do
+	mustache :jmx
+    end       
 
     def save_file(params)
       h = params['files']
