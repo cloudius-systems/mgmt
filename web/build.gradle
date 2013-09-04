@@ -41,6 +41,10 @@ task runapp(type: JavaExec){
     classpath = project(':cli').jar.outputs.files.plus(configurations.jruby).plus(configurations.runtime)
     main = "org.jruby.Main"
     args "bin/app dev".tokenize()
+    jvmArgs =  ['-Dcom.sun.management.jmxremote',
+                '-Dcom.sun.management.jmxremote.port=3000',
+                '-Dcom.sun.management.jmxremote.ssl=false',
+                '-Dcom.sun.management.jmxremote.authenticate=false' ]
     doFirst {
         file("${buildDir}/uploads").mkdirs()
 	  file("${buildDir}/apps").mkdirs()
