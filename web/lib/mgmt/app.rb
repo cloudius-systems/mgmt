@@ -57,8 +57,9 @@ module Mgmt
 
     post '/action' do
 	if(params['action'].eql?('start'))
-	  AppManager.instance.start(params['id'])
-	else
+        {:action=> AppManager.instance.start(params['id'])}.to_json
+	elsif(params['action'].eql?('stop'))
+        {:action=> AppManager.instance.stop(params['id'])}.to_json
 	end
     end
   end
