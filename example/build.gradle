@@ -1,8 +1,16 @@
 apply plugin: 'java'
 version = '1.0'
 
-task zip(type: Zip, dependsOn: 'jar') {
+task runnerZip(type: Zip, dependsOn: 'jar') {
+  baseName 'runner'
   from project.jar
-  from 'example-1.0.json'
-  manifest.attributes('Main-Class': 'com.cloudius.Main')
+  from 'runner-1.0.json'
 }
+
+task mainZip(type: Zip, dependsOn: 'jar') {
+  baseName  'main'
+  from project.jar
+  from 'main-1.0.json'
+}
+
+task zip(dependsOn:['runnerZip','mainZip'])

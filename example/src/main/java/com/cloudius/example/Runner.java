@@ -1,14 +1,16 @@
 package com.cloudius.example;
 
-public class Main {
+public class Runner implements Runnable {
+
+  private boolean run = true;
 
   public static void main(String [] args) {
-    Main.run();
+    new Runner().run();
   }
 
-  public static void run(){
+  public void run(){
     int i =0;
-    while(true){
+    while(run){
 	try{
 	  Thread.sleep(1000);
 	  System.out.println(i++);
@@ -17,4 +19,9 @@ public class Main {
 	}
     }
   }
+
+  public void stop(){
+    run = false;
+  }
+
 }
