@@ -1,4 +1,5 @@
 {
  "name" : "An example OSv application", 
- "args" : "-jar example-1.0.jar"
+ "main" : "com.cloudius.example.Main",
+ "args" : []
 }
