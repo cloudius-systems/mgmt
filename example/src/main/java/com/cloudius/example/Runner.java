@@ -4,10 +4,6 @@ public class Runner implements Runnable {
 
   private boolean run = true;
 
-  public static void main(String [] args) {
-    new Runner().run();
-  }
-
   public void run(){
     int i =0;
     while(run){
