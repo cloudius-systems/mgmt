@@ -1,5 +1,5 @@
 {
- "name" : "An example OSv application", 
+ "name" : "An Runnable OSv application", 
  "main" : "com.cloudius.example.Runner",
  "args" : []
 }
