@@ -12,16 +12,24 @@ import java.util.zip.ZipException;
 
 public class RunJava {
 	
+    private String parent;
+
+    public RunJava(){}
+
+    public RunJava(String parent){
+      this.parent = parent;
+    }
+
     public static void main(String[] args) {
         try {
-            parseArgs(args);
+            new RunJava().parseArgs(args);
         } catch (Throwable ex) {
             System.err.println("Uncaught Java exception:");
             ex.printStackTrace();
         }
     }
 
-    static void parseArgs(String[] args) throws Throwable {
+    public void parseArgs(String[] args) throws Throwable {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-jar")) {
                 if (i+1 >= args.length) {
@@ -57,8 +65,13 @@ public class RunJava {
         System.err.println("RunJava: No jar or class specified to run.");
     }
 
-    static void runJar(String jarname, String[] args) throws Throwable {
-        File jarfile = new File(jarname);
+    private void runJar(String jarname, String[] args) throws Throwable {
+	  File jarfile;
+	  if(parent!=null){
+          jarfile = new File(new File(parent),jarname);
+	  } else {
+	    jarfile = new File(jarname);
+	  }
         try {
             JarFile jar = new JarFile(jarfile);
             Manifest mf = jar.getManifest();
@@ -79,11 +92,11 @@ public class RunJava {
         }
     }
 
-    static void runClass(String mainClass, String[] args) throws Throwable {
+    private void runClass(String mainClass, String[] args) throws Throwable {
         runMain(loadClass(mainClass), args);
     }
 
-    static void runMain(Class<?> klass, String[] args) throws Throwable {
+    private void runMain(Class<?> klass, String[] args) throws Throwable {
         Method main = klass.getMethod("main", String[].class);
         try {
             main.invoke(null, new Object[] { args });
@@ -92,7 +105,7 @@ public class RunJava {
         }               
     }
 
-    static void setClassPath(Iterable<String> jars) throws MalformedURLException {
+    private void setClassPath(Iterable<String> jars) throws MalformedURLException {
         ArrayList<URL> urls = new ArrayList<URL>();
         for (String jar : jars) {
             urls.add(new URL("file:///" + jar));
@@ -116,11 +129,11 @@ public class RunJava {
         System.setProperty("java.class.path", sb.toString());
     }
 
-    static void setClassPath(String jar) throws MalformedURLException {
+    private void setClassPath(String jar) throws MalformedURLException {
         setClassPath(java.util.Collections.singleton(jar));
     }
 	
-    static Class<?> loadClass(String name) throws ClassNotFoundException {
+    private Class<?> loadClass(String name) throws ClassNotFoundException {
         return Thread.currentThread().getContextClassLoader().loadClass(name);
     }
 
@@ -130,12 +143,11 @@ public class RunJava {
     // we also support the traditional (but awkward) Java wildcard syntax,
     // where "dir/*" adds to the classpath all jar files in the given
     // directory.
-    static Iterable<String> expandClassPath(String classpath) {
+    private Iterable<String> expandClassPath(String classpath) {
         ArrayList<String> ret = new ArrayList<String>();
         for (String component : classpath.split(":")) {
             if (component.endsWith("/*")) {
-                File dir = new File(
-                        component.substring(0,  component.length()-2));
+                File dir = new File(component.substring(0,  component.length()-2));
                 if (dir.isDirectory()) {
                     for (File file : dir.listFiles()) {
                         String filename = file.getPath();
