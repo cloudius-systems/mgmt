@@ -8,10 +8,14 @@ $(document).ready(function () {
 
    $('.action').click(function() {
      a = this 
+     id = this.id
      $.ajax({
       type: 'POST',
-  	data: $.param({'id':this.id, 'action':this.text}),
- 	success: function(data){$(a).text(data['action']); },
+  	data: $.param({'id':id, 'action':this.text}),
+ 	success: function(data){
+        $(a).text(data['action']); 
+	  $('td#'+id).text(data['state'])
+      },
       dataType: 'json',
       url: '/action',
       cache:false
