@@ -7,10 +7,11 @@ $(document).ready(function () {
    }).parent().addClass('active').parent().parent().addClass('active');
 
    $('.action').click(function() {
-    $.ajax({
+     a = this 
+     $.ajax({
       type: 'POST',
-	data: $.param({'id':this.id, 'action':this.text}),
-	success: function(data) {alert(data); },
+  	data: $.param({'id':this.id, 'action':this.text}),
+ 	success: function(data){$(a).text(data['action']); },
       dataType: 'json',
       url: '/action',
       cache:false
