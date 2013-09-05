@@ -50,9 +50,16 @@ module Mgmt
     # returns a json has for jquery upload plugin
     post '/deploy-interactive' do  
      h = save_file(params)
-     size = File.size("/uploads/#{h[:filename]}")
+     size = File.size("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}")
      file = {'name' => h[:filename], 'size'=> size , 'url'=> '', 'thumbnailUrl'=> '', 'deleteUrl'=> '', 'deleteType'=> '' }
      return {'files'=> [file]}.to_json
+    end
+
+    post '/action' do
+	if(params['action'].eql?('start'))
+	  AppManager.instance.start(params['id'])
+	else
+	end
     end
   end
 end
