@@ -4,7 +4,8 @@ require 'singleton'
 
 java_import 'org.xeustechnologies.jcl.JarClassLoader'
 java_import 'org.xeustechnologies.jcl.JclObjectFactory'
-
+java_import 'java.util.concurrent.TimeUnit'
+java_import 'java.util.concurrent.CountDownLatch'
 
 STATE_TO_ACT = {:running => :stop, :stopped => :start}
 
@@ -27,16 +28,21 @@ module Mgmt
     def start(id)
 	file = Pathname::glob("#{path(id)}/*.json").first.read
 	conf = JSON.parse(file,{:symbolize_names => true})
-	launch(id,conf)
+	launch(id,conf).await(100, TimeUnit::MILLISECONDS)
 	@apps[id][:state] = :running 
-      :stop 
+	if(@apps[id][:instance])
+	  {:action => :stop, :state => :running}
+	else
+	  {:action => nil, :state => :running}
+	end
     end
 
     def stop(id)
+	raise Exception.new('application does not support stop') unless @apps[id][:instance]
 	@apps[id][:instance].stop
       @apps[id][:instance] = nil
 	@apps[id][:state] = :stopped
-      :start 
+	{:action => :start, :state => :stopped}
     end
 
     private
@@ -56,6 +62,7 @@ module Mgmt
     end
 
     def launch(id,conf)
+	 latch = CountDownLatch.new(1)
 	 Thread.new do
 	  jcl = JarClassLoader.new
 	  jcl.add(path(id))
@@ -63,11 +70,14 @@ module Mgmt
 	  if main.java_instance_methods.map {|m| m.name.to_sym}.include? :run 
 	    instance = JclObjectFactory.getInstance.create(jcl,conf[:main])
 	    @apps[id][:instance] = instance
+	    latch.countDown()
 	    instance.run()
 	  else # using its main method
+	    latch.countDown()
 	    main.java_method(:main).invoke_static(nil)
 	  end
 	end
+	latch 
     end
   end
 end
