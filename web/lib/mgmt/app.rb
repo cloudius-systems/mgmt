@@ -56,11 +56,7 @@ module Mgmt
     end
 
     post '/action' do
-	if(params['action'].eql?('start'))
-        {:action=> AppManager.instance.start(params['id'])}.to_json
-	elsif(params['action'].eql?('stop'))
-        {:action=> AppManager.instance.stop(params['id'])}.to_json
-	end
+      AppManager.instance.send(params['action'],params['id']).to_json
     end
   end
 end
