@@ -1,9 +1,10 @@
+
 module Mgmt
   class App
     module Views
 	class Manage < Layout
 	  def apps
-	    [{:name => "foo", :state => "running", :action => "stop"}]
+         Mgmt::AppManager.instance.list
 	  end
 	end
     end
