@@ -79,7 +79,8 @@ module Mgmt
 	    instance.run()
 	  else # using its main method
 	    latch.countDown()
-	    main.java_method(:main).invoke_static(nil)
+	    f = main.java_class_methods.select{|m| m.name.include?('main')}.first
+	    f.invoke(nil,[@apps[id][:args].to_java(:string)].to_java(:object))
 	  end
 	end
 	latch 
