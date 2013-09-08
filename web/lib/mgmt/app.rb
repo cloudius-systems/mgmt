@@ -56,7 +56,8 @@ module Mgmt
     end
 
     post '/action' do
-      AppManager.instance.send(params['action'],params['id']).to_json
+      AppManager.instance.send(params['action'],params['id'])
+	AppManager.instance.app_state(params['id']).to_json
     end
   end
 end

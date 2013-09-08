@@ -31,9 +31,9 @@ module Mgmt
 	launch(id,conf).await(100, TimeUnit::MILLISECONDS)
 	@apps[id][:state] = :running 
 	if(@apps[id][:instance])
-	  {:action => :stop, :state => :running}
+	  @apps[id][:action] = :stop
 	else
-	  {:action => nil, :state => :running}
+	  @apps[id][:action] = nil
 	end
     end
 
@@ -42,7 +42,11 @@ module Mgmt
 	@apps[id][:instance].stop
       @apps[id][:instance] = nil
 	@apps[id][:state] = :stopped
-	{:action => :start, :state => :stopped}
+	@apps[id][:action] = :start
+    end
+
+    def app_state(id)
+	{:action => @apps[id][:action], :state =>  @apps[id][:state]}
     end
 
     private
@@ -56,6 +60,7 @@ module Mgmt
 	app_dirs.each do |p|
 	  json = JSON.parse(Pathname::glob("#{p}/*.json").first.read)
 	  unless @apps[p.basename.to_s] 
+	    puts p.basename
 	    @apps[p.basename.to_s] = json.merge({:state => :stopped ,:action => :start})
 	  end
 	end 
