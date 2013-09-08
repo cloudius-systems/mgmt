@@ -58,9 +58,8 @@ module Mgmt
     def scan
 	app_dirs = Pathname.new(Mgmt::Env.conf(:apps)).children.select { |c| c.directory?}
 	app_dirs.each do |p|
-	  json = JSON.parse(Pathname::glob("#{p}/*.json").first.read)
+	  json = JSON.parse(Pathname::glob("#{p}/*.json").first.read,{:symbolize_names => true})
 	  unless @apps[p.basename.to_s] 
-	    puts p.basename
 	    @apps[p.basename.to_s] = json.merge({:state => :stopped ,:action => :start})
 	  end
 	end 
