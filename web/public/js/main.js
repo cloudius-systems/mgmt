@@ -13,7 +13,12 @@ $(document).ready(function () {
       type: 'POST',
   	data: $.param({'id':id, 'action':this.text}),
  	success: function(data){
-        $(a).text(data['action']); 
+	  var action = data['action'];
+	  if(action!=null) {
+          $(a).text(action); 
+        } else {
+          $(a).text(''); 
+        }
 	  $('td#'+id).text(data['state'])
       },
       dataType: 'json',
