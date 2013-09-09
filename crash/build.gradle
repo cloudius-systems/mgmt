@@ -15,5 +15,6 @@ jar {
     from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
     exclude('META-INF/BCKEY.*') 
     exclude('crash/commands/base/login.groovy')
+    exclude('crash/commands/base/java.groovy')
     manifest.attributes('Main-Class': 'org.crsh.cli.impl.bootstrap.Main')
 }
