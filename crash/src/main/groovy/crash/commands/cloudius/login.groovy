@@ -1,5 +1,10 @@
 package crash.commands.cloudius
 
+currentPath = new File('/')
+
+getCurrentPath = { currentPath }
+setCurrentPath = { currentPath = it }
+
 welcome = { ->
   return """\
   ____   _____
