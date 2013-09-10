@@ -1,7 +1,16 @@
 
 require 'json'
 
-CONF = JSON.parse(File.open('mgmt.json').read, {:symbolize_names => true})
+
+def json_path 
+  if File.exist?('/usr/mgmt/mgmt.json')
+   '/usr/mgmt/mgmt.json'
+  else
+    'mgmt.json'
+  end
+end
+
+CONF = JSON.parse(File.open(json_path).read, {:symbolize_names => true}) 
 
 module Mgmt
   module Env
