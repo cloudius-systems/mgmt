@@ -6,7 +6,7 @@ def json_path
   if File.exist?('/usr/mgmt/mgmt.json')
    '/usr/mgmt/mgmt.json'
   else
-    'mgmt.json'
+    'config/mgmt.json'
   end
 end
 
