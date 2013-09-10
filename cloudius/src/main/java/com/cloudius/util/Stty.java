@@ -30,5 +30,6 @@ public class Stty implements IStty {
 		freeState(savedStateAddr);
 		savedStateAddr = 0;
 	}
-	
+
+    public native void jlineMode();
 }
