@@ -10,6 +10,7 @@ end
 require 'mgmt'
 
 t = Thread.new do 
+  # Mgmt::Jmx.new.start_server
   Mgmt::App.run! 
 end
 
