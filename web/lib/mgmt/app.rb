@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'mustache/sinatra'
-require "sinatra/reloader" if Mgmt::Env.development?
 require 'java'
 require 'json'
 
@@ -9,7 +8,6 @@ require 'json'
 module Mgmt
   class App < Sinatra::Base
     register Mustache::Sinatra
-    register Sinatra::Reloader if Mgmt::Env.development?
     require 'views/layout'
 
     if(Mgmt::Env.prod?)
@@ -58,7 +56,7 @@ module Mgmt
     end
 
     post '/action' do
-      AppManager.instance.send(params['action'],params['id'])
+	AppManager.instance.send(params['action'],params['id'])
 	AppManager.instance.app_state(params['id']).to_json
     end
   end
