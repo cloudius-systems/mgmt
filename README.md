@@ -23,3 +23,13 @@ Available tasks:
  * vi mgmt/settings.gradle (and the module name to the list)
  * create a new mgmt/${new-module}/build.gradle file under the new module see mgmt/sshd/build.gradle as an example (ask [me](https://github.com/narkisr) if you need more guidance).
 
+# CRaSH
+
+In order to execute current crash build locally, you must select a different "jline.Terminal" implementation. The
+current terminal that was built for OSv (com.cloudius.cli.OSvTerminal) is using the stty JNI for sending commands to
+ioctl.
+
+So there are two ways to execute it:
+
+1. Launch crash with a automatic terminal implementation discovery: java -Djline.terminal=auto -jar crash/build/libs/crash-1.0.jar
+1. Copy stty.so (from the master project build) to /usr/lib/jni/stty.so, and launch crash: java -jar crash/build/libs/crash-1.0.jar
