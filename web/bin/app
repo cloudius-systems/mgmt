@@ -1,8 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$:.push 'lib'
-$:.push '.'
+if(File.exist?('/usr/mgmt'))
+  %w(/usr/mgmt /usr/mgmt/lib).each {|p| $:.push p} 
+else
+  %w(. lib).each {|p| $:.push p}
+end
+
 require 'mgmt'
 
 t = Thread.new do 
