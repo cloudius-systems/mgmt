@@ -14,7 +14,6 @@ t = Thread.new do
 end
 
 if(Mgmt::Env.prod?)
-  require '/java/cli-1.0.jar' 
   java_import com.cloudius.cli.main.RhinoCLI
   RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, [])
 end
