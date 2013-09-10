@@ -41,20 +41,20 @@ module Mgmt
     end       
 
     def save_file(params)
-      h = params['files']
+	h = params['files']
 	File.open("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}", 'w') do |dest|
 	  dest.write(h[:tempfile].read) 
 	end
 	Mgmt::DeployUnit.new(h[:filename]).extract
-     h
+	h
     end
 
     # returns a json has for jquery upload plugin
     post '/deploy-interactive' do  
-     h = save_file(params)
-     size = File.size("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}")
-     file = {'name' => h[:filename], 'size'=> size , 'url'=> '', 'thumbnailUrl'=> '', 'deleteUrl'=> '', 'deleteType'=> '' }
-     return {'files'=> [file]}.to_json
+	h = save_file(params)
+	size = File.size("#{Mgmt::Env.conf(:uploads)}/#{h[:filename]}")
+	file = {'name' => h[:filename], 'size'=> size , 'url'=> '', 'thumbnailUrl'=> '', 'deleteUrl'=> '', 'deleteType'=> '' }
+	return {'files'=> [file]}.to_json
     end
 
     post '/action' do
