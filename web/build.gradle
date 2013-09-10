@@ -55,7 +55,7 @@ task runapp(type: JavaExec){
 
 }
 
-task jar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
+task webjar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
   environment GEM_HOME: gemsDir, GEM_PATH: gemsDir
   inputs.dir "${projectDir}/bin"
   outputs.file "${buildDir}/web.jar"
@@ -75,3 +75,9 @@ task gemList(type: JavaExec){
     args "-S gem list".tokenize()
 }
 
+jar {
+    dependsOn configurations.runtime, 'webjar'
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    from zipTree("${buildDir}/web.jar")
+    manifest.attributes('Main-Class': 'org.jruby.JarBootstrapMain')
+}
