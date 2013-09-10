@@ -12,15 +12,17 @@ module Mgmt
     register Sinatra::Reloader if Mgmt::Env.development?
     require 'views/layout'
 
-    set :mustache, {
-	:views     => 'views',
-	:templates => 'templates'
-    }
+    if(Mgmt::Env.prod?)
+	set :mustache, { :views => '/usr/mgmt/views', :templates => '/usr/mgmt/templates' }
+	set :public_folder, '/usr/mgmt/public'
+    else
+	set :mustache, { :views => 'views', :templates => 'templates' }
+	set :public_folder, 'public'
+    end
 
     configure { set :server, :puma }
     set :bind, '0.0.0.0'
     set :port, 8080
-    set :public_folder, 'public'
 
     get '/' do
 	mustache :index
