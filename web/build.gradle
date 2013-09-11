@@ -31,7 +31,7 @@ task installBundler(type: JavaExec) {
     }
 }
 
-task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
+task bundleInstall(type: JavaExec, dependsOn: installBundler) {
     environment GEM_HOME: gemsDir, GEM_PATH: gemsDir, PATH: "${gemsDir}/bin/"
     classpath = configurations.jruby
     inputs.file "${projectDir}/Gemfile"
@@ -40,7 +40,7 @@ task bundleInstall(type: JavaExec, dependsOn:'installBundler') {
     args "-S bundle install --path=${project.projectDir.path}/vendor/bundle --binstubs".tokenize()
 }
 
-task runapp(type: JavaExec){
+task runapp(type: JavaExec, dependsOn: bundleInstall){
     environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
     classpath = project(':cli').jar.outputs.files.plus(configurations.jruby).plus(configurations.runtime)
     main = "org.jruby.Main"
