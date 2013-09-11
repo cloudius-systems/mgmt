@@ -1,6 +1,9 @@
-apply plugin: 'java'
+import static groovy.io.FileType.FILES
 
+apply plugin: 'java'
 version = '1.0'
+
+def services = 'build/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin'
 
 dependencies {
   compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
@@ -10,9 +13,33 @@ dependencies {
   compile project(':cloudius')
 }
 
+
+task serviceConcat(type:Copy){
+  def i = 0
+  configurations.compile.resolvedConfiguration.resolvedArtifacts.collect{ zipTree(it.file)  }.each {d->
+     from (d){
+      rename 'org.crsh.plugin.CRaSHPlugin', "org.crsh.plugin.CRaSHPlugin-${i++}"
+	include 'META-INF/services/**'
+    }
+  }
+  into 'build/plugins'
+  doLast {
+    def res = new File(services)
+    file('build/plugins/META-INF/services/').eachFileMatch(FILES,~/.*CRaSHPlugin\-\d/) {
+     res << it.text
+    }
+  }
+}
+
+
 jar {
-    dependsOn configurations.runtime
-    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    dependsOn configurations.runtime, serviceConcat
+    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
+	exclude('META-INF/services/org.crsh.plugin.CRaSHPlugin') 
+    }
+    from(services){
+    	into 'META-INF/services/'
+    }
     exclude('META-INF/BCKEY.*') 
     exclude('crash/commands/base/login.groovy')
     exclude('crash/commands/base/java.groovy')
