@@ -9,6 +9,12 @@ end
 
 require 'mgmt'
 
+require 'jmx4r'
+
+class JMX::MBean
+  @@connection = java.lang.management.ManagementFactory.getPlatformMBeanServer()
+end
+
 t = Thread.new do 
   # Mgmt::Jmx.new.start_server
   Mgmt::App.run! 
