@@ -3,7 +3,7 @@ import static groovy.io.FileType.FILES
 apply plugin: 'java'
 version = '1.0'
 
-def services = 'build/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin'
+def services = "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin"
 
 dependencies {
   compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
