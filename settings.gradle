@@ -1,1 +1,1 @@
-include 'web', 'sshd', 'cli', 'cloudius', 'crash', 'example'
+include 'web', 'sshd', 'cli', 'cloudius', 'crash', 'crash-sshd', 'example'
