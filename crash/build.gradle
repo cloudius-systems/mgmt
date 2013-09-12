@@ -7,10 +7,10 @@ def services = "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugi
 
 dependencies {
   compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
-  compile group: 'org.crsh' , name:'crsh.shell.ssh', version:'1.2.7'
   compile group: 'org.crsh' , name:'crsh.shell.telnet', version:'1.2.7'
   compile group: 'jline' , name:'jline', version:'2.10'
   compile project(':cloudius')
+  compile project(':crash-sshd')
 }
 
 
