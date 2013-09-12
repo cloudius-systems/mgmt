@@ -7,7 +7,7 @@ class ls {
   @Usage("list directory contents")
   @Command
   Object main() {
-    context.print(getCurrentPath().listFiles().collect({
+    out.print(getCurrentPath().listFiles().collect({
       it.getName()
     }).join('\t'))
   }

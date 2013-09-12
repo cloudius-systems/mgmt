@@ -7,6 +7,6 @@ class pwd {
   @Usage("print name of current working directory")
   @Command
   Object main() {
-    out.println(currentPath)
+    out.print(currentPath)
   }
 }
