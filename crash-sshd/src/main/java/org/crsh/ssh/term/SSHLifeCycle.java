@@ -114,6 +114,10 @@ public class SSHLifeCycle extends TermLifeCycle {
       server.setCommandFactory(new SCPCommandFactory(getContext()));
       server.setKeyPairProvider(new URLKeyPairProvider(key));
 
+      // Support SFTP subsystem
+      ArrayList<NamedFactory<Command>> subsystemFactoriesList = new ArrayList<NamedFactory<Command>>(1);
+      subsystemFactoriesList.add(new SftpSubsystem.Factory());
+      server.setSubsystemFactories(subsystemFactoriesList);
         //
       if (authentication.getCredentialType().equals(String.class)) {
         @SuppressWarnings("unchecked")
