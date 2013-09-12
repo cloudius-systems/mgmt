@@ -33,3 +33,8 @@ So there are two ways to execute it:
 
 1. Launch crash with a automatic terminal implementation discovery: java -Djline.terminal=auto -jar crash/build/libs/crash-1.0.jar
 1. Copy stty.so (from the master project build) to /usr/lib/jni/stty.so, and launch crash: java -jar crash/build/libs/crash-1.0.jar
+
+## CRaSH SSHD
+
+After launching CRaSH, you should be able to connect through SSH with
+admin/admin on port 80
