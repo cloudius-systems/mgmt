@@ -8,7 +8,6 @@ else
 end
 
 require 'mgmt'
-
 require 'jmx4r'
 
 class JMX::MBean
@@ -16,13 +15,18 @@ class JMX::MBean
 end
 
 t = Thread.new do 
-  # Mgmt::Jmx.new.start_server
-  Mgmt::App.run! 
+ Mgmt::App.run!
 end
+
 
 if(Mgmt::Env.prod?)
-  java_import com.cloudius.cli.main.RhinoCLI
-  RhinoCLI.run(RhinoCLI::ConsoleTTY.new, true, [])
+  require('/usr/lib/crash-1.0.jar')
+else
+  require('../crash/build/libs/crash-1.0.jar')
 end
-
+# This triggers the loading of http://bit.ly/1dbi67W require by crash-sshd
+# If we will have two versions in classpath will trigger http://bit.ly/162nBRg
+# This is why crash jar excludes org/bountycastle
+require 'bouncy-castle-java'
+com.cloudius.cli.Main.main([])
 t.join
