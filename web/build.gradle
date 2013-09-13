@@ -61,16 +61,6 @@ task webjar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
   args "-S bin/puck --extra-files views/** public/**".tokenize()
 }
 
-task deleteVendor(type: Delete) {
-  delete "${project.projectDir.path}/vendor"
-}
-
-task gemList(type: JavaExec){
-    environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
-    classpath = project(':cli').jar.outputs.files.plus(configurations.jruby)
-    main = "org.jruby.Main"
-    args "-S gem list".tokenize()
-}
 
 jar {
     dependsOn configurations.runtime, 'webjar'
