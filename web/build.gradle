@@ -63,7 +63,7 @@ task webjar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
 
 
 jar {
-    dependsOn configurations.runtime, 'webjar'
+    dependsOn configurations.runtime, webjar
     from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
     from zipTree("${buildDir}/web.jar")
     manifest.attributes('Main-Class': 'org.jruby.JarBootstrapMain')
