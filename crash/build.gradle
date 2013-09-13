@@ -32,6 +32,7 @@ task serviceConcat(type:Copy){
      res << it.text
     }
   }
+  outputs.file file(services)
 }
 
 
