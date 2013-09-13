@@ -10,8 +10,6 @@ dependencies {
     jruby 'org.jruby:jruby-complete:1.7.4'
     runtime 'net.lingala.zip4j:zip4j:1.2.3'
     runtime 'org.xeustechnologies:jcl-core:2.3'
-    runtime project(':cloudius')
-    runtime project(':cli')// until crush is default
     runtime 'com.j256.simplejmx:simplejmx:1.1'
 }
 
@@ -42,9 +40,11 @@ task bundleInstall(type: JavaExec, dependsOn: installBundler) {
 
 task runapp(type: JavaExec, dependsOn: bundleInstall){
     environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
-    classpath = project(':cli').jar.outputs.files.plus(configurations.jruby).plus(configurations.runtime)
+    classpath = project(':crash').jar.outputs.files.plus(configurations.jruby).plus(configurations.runtime)
     main = "org.jruby.Main"
-    args "bin/app dev".tokenize()
+    jvmArgs '-Djline.terminal=auto'
+    standardInput System.in
+    args 'bin/app dev'.tokenize()
     doFirst {
         file("${buildDir}/uploads").mkdirs()
 	  file("${buildDir}/apps").mkdirs()
