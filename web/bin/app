@@ -26,9 +26,7 @@ ensure
 end
 
 t = Thread.new do 
- capture_stderr do
    Mgmt::App.run!
- end
 end
 
 
