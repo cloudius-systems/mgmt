@@ -33,7 +33,7 @@ end
 
 
 if(Mgmt::Env.prod?)
-  require('/usr/lib/crash-1.0.jar')
+  require('/usr/mgmt/crash-1.0.jar')
 else
   require('../crash/build/libs/crash-1.0.jar')
 end
