@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'puma'
 gem 'mustache'
 gem 'jruby-jars', '= 1.7.4'
+gem 'bouncy-castle-java'
 gem 'jmx4r'
 
 group :development do
