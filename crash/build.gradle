@@ -44,6 +44,7 @@ jar {
     from(services){
     	into 'META-INF/services/'
     }
+    exclude('org/bouncycastle/')
     exclude('META-INF/BCKEY.*') 
     exclude('crash/commands/base/login.groovy')
     exclude('crash/commands/base/java.groovy')
