@@ -5,6 +5,9 @@ version = '1.0'
 
 def services = "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin"
 
+// this is require because serviceConcat resolves artifacts defined in crash-sshd
+project.evaluationDependsOn(':crash-sshd')
+
 dependencies {
   compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
   compile group: 'org.crsh' , name:'crsh.shell.telnet', version:'1.2.7'
