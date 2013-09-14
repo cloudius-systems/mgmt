@@ -39,7 +39,8 @@ task serviceConcat(type:Copy){
 jar {
     dependsOn configurations.runtime, serviceConcat
     from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
-	exclude('META-INF/services/org.crsh.plugin.CRaSHPlugin') 
+      exclude('META-INF/services/org.crsh.plugin.CRaSHPlugin')
+      exclude('crash/crash.properties')
     }
     from(services){
     	into 'META-INF/services/'

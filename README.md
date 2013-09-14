@@ -36,5 +36,4 @@ So there are two ways to execute it:
 
 ## CRaSH SSHD
 
-After launching CRaSH, you should be able to connect through SSH with
-admin/admin on port 80
+After launching CRaSH, you should be able to connect through SSH with admin/admin
