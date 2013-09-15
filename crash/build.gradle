@@ -3,47 +3,72 @@ import static groovy.io.FileType.FILES
 apply plugin: 'java'
 version = '1.0'
 
-def services = "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin"
-
 // this is require because serviceConcat resolves artifacts defined in crash-sshd
 project.evaluationDependsOn(':crash-sshd')
 
 dependencies {
   compile group: 'org.crsh' , name:'crsh.cli', version:'1.2.7'
-  compile group: 'org.crsh' , name:'crsh.shell.telnet', version:'1.2.7'
+  compile group: 'org.crsh' , name:'crsh.shell.core', version:'1.2.7'
   compile group: 'jline' , name:'jline', version:'2.10'
   compile project(':cloudius')
   compile project(':crash-sshd')
 }
 
+def services = [
+  "org.crsh.plugin.CRaSHPlugin": [
+    buildFile: "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin",
+    match: ~/.*CRaSHPlugin\-\d+/
+  ],
+  "org.codehaus.groovy.transform.ASTTransformation": [
+    buildFile: "${buildDir}/plugins/META-INF/services/org.codehaus.groovy.transform.ASTTransformation",
+    match: ~/.*ASTTransformation\-\d+/
+  ],
+]
 
 task serviceConcat(type:Copy){
   def i = 0
   configurations.compile.resolvedConfiguration.resolvedArtifacts.collect{ zipTree(it.file)  }.each {d->
-     from (d){
-      rename 'org.crsh.plugin.CRaSHPlugin', "org.crsh.plugin.CRaSHPlugin-${i++}"
-	include 'META-INF/services/**'
+    from (d) {
+      rename ~/(${services.collect({ it.key }).join("|")})$/, "\$1-${i++}"
+	    include 'META-INF/services/**'
     }
   }
   into 'build/plugins'
   doLast {
-    def res = new File(services)
-    file('build/plugins/META-INF/services/').eachFileMatch(FILES,~/.*CRaSHPlugin\-\d/) {
-     res << it.text
+    services.each { name, props ->
+      def serviceFile = new File(props.buildFile)
+      // Remote previous content
+      if (serviceFile.exists()) {
+        serviceFile.delete()
+        serviceFile.createNewFile()
+      }
+
+      def lines = []
+      file('build/plugins/META-INF/services/').eachFileMatch(FILES, props.match) {
+        if (!lines.contains(it.text)) {
+          lines.add(it.text)
+          serviceFile << it.text
+        }
+      }
     }
   }
-  outputs.file file(services)
+
+  outputs.files services.collect({ name, props -> file(props.buildFile) })
 }
 
 
 jar {
     dependsOn configurations.runtime, serviceConcat
     from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
-      exclude('META-INF/services/org.crsh.plugin.CRaSHPlugin')
+      services.each {
+        exclude("META-INF/services/${it.key}")
+      }
       exclude('crash/crash.properties')
     }
-    from(services){
-    	into 'META-INF/services/'
+    services.each { name, props ->
+      from(props.buildFile) {
+        into 'META-INF/services/'
+      }
     }
     exclude('org/bouncycastle/')
     exclude('META-INF/BCKEY.*') 
