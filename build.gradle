@@ -3,11 +3,7 @@ allprojects {
   repositories {
     mavenRepo(url:'http://dl.bintray.com/content/narkisr/narkisr-jars/')
     maven {
-	url 'http://cloudius.artifactoryonline.com/cloudius/repo'
-      credentials {
-       username = 'reader'
-       password = 'oamahG7e'
-      }
+  	 url 'http://reader:oamahG7e@cloudius.artifactoryonline.com/cloudius/repo/'
     }
   }
 }
