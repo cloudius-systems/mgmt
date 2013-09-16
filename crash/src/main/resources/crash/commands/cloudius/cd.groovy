@@ -1,17 +1,23 @@
 package crash.commands.cloudius
 
+import com.cloudius.cli.completers.PathCompleter
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Usage
+import org.crsh.cli.descriptor.ParameterDescriptor
+import org.crsh.cli.spi.Completer
+import org.crsh.cli.spi.Completion
 
-public class cd {
+class cd implements Completer {
   @Usage("change the current working directory")
   @Command
-  public Object main(
-    @Argument String path) {
+  public void main(
+    @Argument(completer = cd.class) String path) {
 
     if (path == null) {
       newPath = new File('/')
+    } else if (path.startsWith('/')) {
+      newPath = new File(path).getCanonicalFile()
     } else {
       newPath = new File(getCurrentPath().getPath(), path).getCanonicalFile()
     }
@@ -23,6 +29,13 @@ public class cd {
     } else {
       setCurrentPath(newPath)
     }
+  }
+
+  @Override
+  Completion complete(ParameterDescriptor parameter, String prefix) throws Exception {
+    new PathCompleter(context.getSession().get("getCurrentPath")()).complete(
+      parameter, prefix
+    )
   }
 }
 
