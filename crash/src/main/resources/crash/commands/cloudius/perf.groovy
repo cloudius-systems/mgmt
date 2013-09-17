@@ -21,13 +21,17 @@ public class perf {
     public void callstack(@Required @Argument String name) {
         Tracepoint tp = new Tracepoint(name);
         Callstack[] traces = Callstack.collect(tp, 10, 20, 5000);
-        out.print(sprintf("%10s  %s\n", "freq", "callstack"));
-        for (Callstack trace : traces) {
-            out.print(sprintf("%10d ", trace.getHits()));
-            for (long pc : trace.getProgramCounters()) {
-                out.print(sprintf(" 0x%x", pc));
+        if (traces.length == 0) {
+            out.print(sprintf("no traces for %s\n", name));
+        } else {
+            out.print(sprintf("%10s  %s\n", "freq", "callstack"));
+            for (Callstack trace : traces) {
+                out.print(sprintf("%10d ", trace.getHits()));
+                for (long pc : trace.getProgramCounters()) {
+                    out.print(sprintf(" 0x%x", pc));
+                }
+                out.print('\n');
             }
-            out.print('\n');
         }
     }
 }
