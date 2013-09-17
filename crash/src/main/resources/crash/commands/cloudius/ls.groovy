@@ -18,6 +18,9 @@ class ls extends OSvCommand implements Completer {
     @Argument(completer = ls.class) String path
   ) {
     pathToList = new File(getCurrentPath(), path == null ? '' : path)
+    if (!pathToList.exists()) {
+        throw new ScriptException("no such file or directory")
+    }
     files = pathToList.isDirectory() ? pathToList.listFiles() : [pathToList]
     itemsToColumns(files.collect({ it.isDirectory() ? it.getName() + "/" : it.getName() }), context.width)
   }
