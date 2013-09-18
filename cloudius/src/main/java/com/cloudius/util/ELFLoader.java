@@ -1,4 +1,4 @@
-package com.cloudius.cli.util;
+package com.cloudius.util;
 
 import java.io.IOException;
 
