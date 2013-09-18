@@ -57,12 +57,7 @@ public class TestRunner {
         this.registerELFTests();
     }
     
-    public Scriptable getTestNames() {
-        Context cx = Context.enter();
-        Object[] names = _tests.keySet().toArray();
-        Scriptable tests = cx.newArray(cx.initStandardObjects(), names);
-        Context.exit();
-        
-        return (tests);
+    public String[] getTestNames() {
+        return _tests.keySet().toArray(new String[0]);
     }
 }

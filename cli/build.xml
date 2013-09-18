@@ -30,8 +30,6 @@
   </path>
 
   <target name="compile" depends="init" description="compile the source " >
-    <get src="http://dl.bintray.com/narkisr/narkisr-jars/rhino.jar" dest="lib" verbose="true" usetimestamp="true"/>
-
     <!-- Compile the java code from ${src} into ${build} -->
     <javac includeantruntime="false" srcdir="${src-cloudius}" destdir="${build-cloudius}"/>
 

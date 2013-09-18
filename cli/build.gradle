@@ -3,6 +3,5 @@ apply plugin: 'java'
 version = '1.0'
 
 dependencies {
-  compile group: 'org.openjdk' , name:'rhino', version:'7'
   compile project(':cloudius')
 }
