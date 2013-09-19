@@ -10,6 +10,9 @@ class md5sum {
   Object main(
     @Required @Argument String path) {
     file = new File(getCurrentPath().getPath(), path)
+    if (!file.exists()) {
+        throw new ScriptException("no such file or directory")
+    }
     MD5.md5(file.getPath())
   }
 }
