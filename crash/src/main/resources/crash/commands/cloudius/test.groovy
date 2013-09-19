@@ -32,7 +32,7 @@ class test implements Completer {
     durationNanoTime = (System.nanoTime() - beginNanoTime)
     durationTime = durationNanoTime / 1000000000.0
 
-    out.println(String.format(">>> Test duration %.6fs, %.0fns\n", durationTime, durationNanoTime))
+    out.println(String.format(">>> Test duration %.6f s, %d ns\n", durationTime, durationNanoTime))
     out.println(">>> Test completed " + (result ? "successfully!" : "unsuccessfully..."))
   }
 
