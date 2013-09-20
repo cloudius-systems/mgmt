@@ -1,8 +1,5 @@
 package com.cloudius.cli.tests;
 
-import sun.org.mozilla.javascript.Context;
-import sun.org.mozilla.javascript.Scriptable;
-
 import java.io.File;
 import java.util.HashMap;
 
