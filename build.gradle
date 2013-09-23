@@ -1,7 +1,6 @@
 allprojects {
   group = 'com.cloudius'
   repositories {
-    mavenRepo(url:'http://dl.bintray.com/content/narkisr/narkisr-jars/')
     maven {
   	 url 'http://reader:oamahG7e@cloudius.artifactoryonline.com/cloudius/repo/'
     }
