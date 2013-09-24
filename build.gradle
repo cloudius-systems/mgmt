@@ -1,12 +1,37 @@
 allprojects {
+  apply plugin: 'artifactory'
   group = 'com.cloudius'
   repositories {
     maven {
   	 url 'http://reader:oamahG7e@cloudius.artifactoryonline.com/cloudius/repo/'
     }
   }
+
+ artifactory {
+  publish {
+    contextUrl = 'https://cloudius.artifactoryonline.com/cloudius/'
+    repository {
+      repoKey = 'mgmt-releases'
+      username = ''
+      password = ''
+    }
+   }
+}
 }
 
+
+buildscript {
+  repositories {
+    maven { url 'http://dl.bintray.com/jfrog/jfrog-jars' }
+    maven {
+	url 'https://cloudius.artifactoryonline.com/cloudius/repo'
+    }
+
+  }
+  dependencies {
+    classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.1.0')
+  }
+}
 
 task wrapper(type: Wrapper) {
  gradleVersion = '1.7'
