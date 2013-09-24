@@ -26,8 +26,7 @@ module Mgmt
     end
 
     def start(id)
-	file = Pathname::glob("#{path(id)}/*.json").first.read
-	conf = JSON.parse(file,{:symbolize_names => true})
+	conf = safe_json(path(id))
 	launch(id,conf).await(100, TimeUnit::MILLISECONDS)
 	@apps[id][:state] = :running 
 	if(@apps[id][:instance])
@@ -58,11 +57,17 @@ module Mgmt
     def scan
 	app_dirs = Pathname.new(Mgmt::Env.conf(:apps)).children.select { |c| c.directory?}
 	app_dirs.each do |p|
-	  json = JSON.parse(Pathname::glob("#{p}/*.json").first.read,{:symbolize_names => true})
+	  json = safe_json(p)
 	  unless @apps[p.basename.to_s] 
 	    @apps[p.basename.to_s] = json.merge({:state => :stopped ,:action => :start})
 	  end
 	end 
+    end
+
+    def safe_json(path)
+      file =  Pathname::glob("#{path}/*.json").first
+	raise Exception.new("application json file not found for #{path}") unless file
+    	JSON.parse(file.read,{:symbolize_names => true})
     end
 
     def launch(id,conf)
