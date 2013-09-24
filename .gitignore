@@ -11,3 +11,5 @@ web/bin/rake
 web/bin/tilt
 web/bin/haml
 web/bin/mustache
+build
+gradle.properties
