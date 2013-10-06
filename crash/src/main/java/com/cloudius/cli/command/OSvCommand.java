@@ -34,22 +34,22 @@ public class OSvCommand extends CRaSHCommand {
   /**
    * Decides whether to daemonize a closure or not
    *
-   * @param argv The command line arguments, if it ends with a & then closure will be executed in a different thread.
+   * @param unmatched The command line arguments, if it ends with a & then closure will be executed in a different thread.
    * @param closure The closure to call, receives back the command line arguments (argv).
    *                If closure was executed in a different thread (i.e. daemonized), receives argv without &.
    */
-  public void daemonizeIfNeeded(final String argv, final Closure closure) {
-    final boolean daemonize = argv.lastIndexOf('&') == argv.length() - 1;
+  public void daemonizeIfNeeded(final String unmatched, final Closure closure) {
+    final boolean daemonize = unmatched.length() > 0 && unmatched.lastIndexOf('&') == unmatched.length() - 1;
 
     Runnable runnable = new Runnable() {
       @Override
       public void run() {
-        closure.call(daemonize ? argv.substring(0, argv.lastIndexOf('&') - 1) : argv);
+        closure.call(daemonize ? unmatched.substring(0, Math.max(unmatched.lastIndexOf('&') - 1, 0)) : unmatched);
       }
     };
 
     if (daemonize) {
-      new Thread(runnable, argv.substring(0, argv.indexOf(' '))).start();
+      new Thread(runnable).start();
     } else {
       runnable.run();
     }

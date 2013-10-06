@@ -21,9 +21,9 @@ class run extends OSvCommand implements Completer {
       throw new ScriptException("not a file")
     }
 
-    daemonizeIfNeeded(unmatched, { argv ->
+    daemonizeIfNeeded(unmatched, { String modUnmatched ->
       def command = [file.getCanonicalPath()]
-      command.addAll(argv.split(" "))
+      command.addAll(modUnmatched.split(" "))
 
       def elfLoader = new ELFLoader()
       if (elfLoader.run(command as String[])) {
