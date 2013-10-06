@@ -2,6 +2,7 @@ package crash.commands.cloudius
 
 import org.crsh.cli.Command
 import org.crsh.cli.Usage
+import io.osv.RunJava
 
 class java {
   @Usage("Java application launcher")
