@@ -11,6 +11,7 @@ dependencies {
     runtime 'net.lingala.zip4j:zip4j:1.2.3'
     runtime 'org.xeustechnologies:jcl-core:2.3'
     runtime 'com.j256.simplejmx:simplejmx:1.1'
+    runtime 'jline:jline:2.10'
 }
 
 ext {
@@ -77,7 +78,9 @@ task webjar(type: JavaExec, overwrite: true,dependsOn:'bundleInstall') {
 jar {
     dependsOn configurations.runtime, webjar, project(':crash').jar
     from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
-    from zipTree("${buildDir}/web.jar")
+    from zipTree("${buildDir}/web.jar").matching({
+        exclude '**/jline/**/*' // jruby-core ships with old jline-2.7, we need jline >= 2.10
+    })
     manifest.attributes('Main-Class': 'org.jruby.JarBootstrapMain')
 }
 
