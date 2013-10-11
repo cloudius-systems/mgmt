@@ -12,6 +12,17 @@ dependencies {
     runtime 'org.xeustechnologies:jcl-core:2.3'
     runtime 'com.j256.simplejmx:simplejmx:1.1'
     runtime 'jline:jline:2.10'
+    runtime 'org.codehaus.groovy:groovy-all:1.8.9'
+    runtime 'ch.qos.logback:logback-classic:1.0.13'
+    runtime 'org.slf4j:jul-to-slf4j:1.7.5'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'resources'
+        }
+    }
 }
 
 ext {
@@ -41,16 +52,22 @@ task bundleInstall(type: JavaExec, dependsOn: installBundler) {
 
 task runapp(type: JavaExec, dependsOn: bundleInstall){
     environment GEM_HOME: bundleDir, GEM_PATH: bundleDir
-    classpath = project(':crash').jar.outputs.files.plus(configurations.jruby).plus(configurations.runtime)
+    classpath = project(':crash').jar.outputs.files
+            .plus(configurations.jruby)
+            .plus(configurations.runtime)
+            .plus(sourceSets.main.runtimeClasspath)
     main = "org.jruby.Main"
-    jvmArgs '-Djline.terminal=auto'
+    jvmArgs = [
+      '-Djline.terminal=auto',
+      '-Dlog.dir=.',
+      "-Djava.util.logging.config.file=${projectDir}/config/logging.properties"
+    ]
     standardInput System.in
     args 'bin/app dev'.tokenize()
     doFirst {
         file("${buildDir}/uploads").mkdirs()
 	  file("${buildDir}/apps").mkdirs()
     }
-
 }
 
 task test(type: JavaExec, dependsOn: bundleInstall,overwrite: true){
