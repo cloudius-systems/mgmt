@@ -83,21 +83,3 @@ jar {
     })
     manifest.attributes('Main-Class': 'org.jruby.JarBootstrapMain')
 }
-
-task releaseZip(type:Tar, dependsOn: jar ){
-  ['public', 'views', 'templates','config','bin','lib'].each {p -> into(p){ from p} }
-  from project(':crash').jar
-  from jar
-}
-
-configurations {
-  releases
-}
-artifacts {
-  releases releaseZip
-}
-
-artifactoryPublish {
-  skip = false //Skip build info analysis and publishing (false by default) 
-  publishConfigs(configurations.releases)
-}
