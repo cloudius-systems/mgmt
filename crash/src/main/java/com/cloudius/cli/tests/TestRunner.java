@@ -2,11 +2,9 @@ package com.cloudius.cli.tests;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class TestRunner {
     
-    private final Logger log = Logger.getLogger(getClass().getName());
     private HashMap<String, Test> _tests;
     
     public TestRunner() {
@@ -35,11 +33,6 @@ public class TestRunner {
     
     public void registerELFTests() {
         File dir = new File("/tests");
-        if (!dir.isDirectory()) {
-            log.warning("No such directory: " + dir);
-            return;
-        }
-
         File[] files = dir.listFiles();
         for (File f: files) {
             try {
