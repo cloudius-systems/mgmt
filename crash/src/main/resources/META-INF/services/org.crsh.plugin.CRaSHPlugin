@@ -1,1 +1,2 @@
 com.cloudius.cli.plugins.SCPCommandPlugin
+com.cloudius.cli.plugins.SftpSubsystemPlugin
