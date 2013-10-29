@@ -1,3 +1,0 @@
-org.crsh.ssh.SSHPlugin
-org.crsh.ssh.term.inline.SSHInlinePlugin
-org.crsh.auth.KeyAuthenticationPlugin
