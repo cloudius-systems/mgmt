@@ -24,7 +24,8 @@ def services = [
 
 task serviceConcat(type:Copy){
   def i = 0
-  configurations.compile.resolvedConfiguration.resolvedArtifacts.collect{ zipTree(it.file)  }.each {d->
+  (configurations.compile.resolvedConfiguration.resolvedArtifacts.collect{ zipTree(it.file)  } +
+      fileTree(dir: 'src/main/resources')).each { d ->
     from (d) {
       rename ~/(${services.collect({ it.key }).join("|")})$/, "\$1-${i++}"
 	    include 'META-INF/services/**'
