@@ -1,6 +1,8 @@
 package com.cloudius.cli.command;
 
 import groovy.lang.Closure;
+import org.crsh.cli.descriptor.ParameterDescriptor;
+import org.crsh.cli.spi.Completion;
 import org.crsh.command.CRaSHCommand;
 
 import java.util.ArrayList;
@@ -51,5 +53,24 @@ public class OSvCommand extends CRaSHCommand {
     } else {
       runnable.run();
     }
+  }
+
+  /**
+   * Builds a Completion.Builder object from a given list of strings, using the provided prefix. This structure
+   * basically repeated itself in completion methods.
+   *
+   * @param options The options to build the list from.
+   * @param parameter The parameter which is the completion target, currently not used in this method.
+   * @param prefix The provided prefix.
+   * @return Completion.Builder instance which includes all of the matching entries.
+   */
+  public static Completion.Builder complete(ArrayList<String> options, ParameterDescriptor parameter, String prefix) {
+    Completion.Builder builder = Completion.builder(prefix);
+    for (String option : options) {
+      if (option.startsWith(prefix)) {
+        builder.add(option.substring(prefix.length()), true);
+      }
+    }
+    return builder;
   }
 }
