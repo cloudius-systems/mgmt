@@ -1,5 +1,6 @@
 package crash.commands.cloudius
 
+import com.cloudius.cli.command.OSvCommand
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Required
@@ -38,12 +39,6 @@ class test implements Completer {
 
   @Override
   Completion complete(ParameterDescriptor parameter, String prefix) throws Exception {
-    Completion.Builder builder = Completion.builder(prefix)
-    testRunner.getTestNames().each {
-      if (it.startsWith(prefix)) {
-        builder.add(it.substring(prefix.length()), true)
-      }
-    }
-    builder.build()
+    OSvCommand.complete(testRunner.getTestNames() as ArrayList<String>, parameter, prefix).build()
   }
 }
