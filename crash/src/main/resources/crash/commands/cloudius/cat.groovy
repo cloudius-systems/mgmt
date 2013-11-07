@@ -17,7 +17,7 @@ class cat implements Completer {
   void main(
   @Required @Argument(completer = cat.class) String path
   ) {
-    file = new File(getCurrentPath().getPath(), path)
+    file = getResolvedPath(path)
 
     if (!file.exists()) {
       throw new ScriptException("no such file or directory")

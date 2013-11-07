@@ -17,7 +17,7 @@ class ls extends OSvCommand implements Completer {
   String main(
     @Argument(completer = ls.class) String path
   ) {
-    pathToList = new File(getCurrentPath(), path == null ? '' : path)
+    pathToList = getResolvedPath(path == null ? '.' : path)
     if (!pathToList.exists()) {
         throw new ScriptException("no such file or directory")
     }

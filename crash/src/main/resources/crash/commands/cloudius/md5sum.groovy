@@ -9,7 +9,7 @@ class md5sum {
   @Command
   Object main(
     @Required @Argument String path) {
-    file = new File(getCurrentPath().getPath(), path)
+    file = getResolvedPath(path)
     if (!file.exists()) {
         throw new ScriptException("no such file or directory")
     }
