@@ -24,20 +24,9 @@ ensure
   $stderr = previous_stderr
   $stdout = previous_stdout
 end
-
+Dir.chdir "/usr/mgmt"
 t = Thread.new do 
    Mgmt::App.run!
 end
 
-
-if(Mgmt::Env.prod?)
-  require('/usr/mgmt/crash-1.0.0.jar')
-else
-  require('../crash/build/libs/crash-1.0.0.jar')
-end
-# This triggers the loading of http://bit.ly/1dbi67W require by crash-sshd
-# If we will have two versions in classpath will trigger http://bit.ly/162nBRg
-# This is why crash jar excludes org/bountycastle
-require 'bouncy-castle-java'
-com.cloudius.cli.Main.main([])
 t.join
