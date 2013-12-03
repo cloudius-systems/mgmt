@@ -1,0 +1,138 @@
+{
+    "apiVersion": "0.0.1",
+    "swaggerVersion": "1.2",
+    "basePath": "https://osv.io/api",
+    "resourcePath": "/jvm",
+    "produces": [
+        "application/json",
+        "application/xml"
+    ],
+    "apis": [
+        {
+            "path": "/jvm/version",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "JAVA version",
+                    "notes": "return the version of the JAVA runtime",
+                    "responseClass": "string",
+                    "nickname": "getJavaVersion",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/jvm/memory/balloon/size",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "JVM memory Balloon size",
+                    "notes": "",
+                    "responseClass": "long",
+                    "nickname": "getBalloonSize",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/jvm/memory/gc/count",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Number of collections that have occurred",
+                    "notes": "",
+                    "responseClass": "long",
+                    "nickname": "getGCcount",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/jvm/memory/gc",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Force GC",
+                    "notes": "",
+                    "responseClass": "void",
+                    "nickname": "getGCcount",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/jvm/jmx",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get a runtime MBean value",
+                    "notes": "",
+                    "responseClass": "string",
+                    "nickname": "getJMXvalue",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "description": "JMX path to probe",
+                            "required": true,
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/jvm/jmx",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "set a configuration MBean value",
+                    "notes": "",
+                    "responseClass": "void",
+                    "nickname": "setJMXvalue",
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "description": "JMX path to update",
+                            "required": true,
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        }
+    ]
+} 

@@ -1,0 +1,30 @@
+{
+    "apiVersion": "0.0.1",
+    "swaggerVersion": "1.2",
+    "basePath": "https://osv.io/api",
+    "resourcePath": "/api",
+    "produces": [
+        "application/json",
+        "application/xml"
+    ],
+    "apis": [
+        {
+            "path": "/api/version",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "API version",
+                    "notes": "return the version of the API definition",
+                    "responseClass": "string",
+                    "nickname": "getAPIversion",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [],
+                    "deprecated": "false"
+                }
+            ]
+        }
+    ]
+}
