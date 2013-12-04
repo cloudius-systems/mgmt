@@ -28,14 +28,14 @@
             ]
         },
         {
-            "path": "/jvm/memory/balloon/size",
+            "path": "/jvm/memory/balloon",
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "JVM memory Balloon size",
+                    "summary": "JVM memory Balloon infomration",
                     "notes": "",
-                    "responseClass": "long",
-                    "nickname": "getBalloonSize",
+                    "responseClass": "Balloon",
+                    "nickname": "getBalloon",
                     "produces": [
                         "application/json",
                         "application/xml"
@@ -47,14 +47,14 @@
             ]
         },
         {
-            "path": "/jvm/memory/gc/count",
+            "path": "/jvm/memory/gc",
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "Number of collections that have occurred",
-                    "notes": "",
-                    "responseClass": "long",
-                    "nickname": "getGCcount",
+                    "summary": "get GC related infomrtion",
+                    "notes": "return a list of Memory Managers, each with its related infomration",
+                    "responseClass": "List[MemoryManager]",
+                    "nickname": "getGCinfo",
                     "produces": [
                         "application/json",
                         "application/xml"
@@ -134,5 +134,35 @@
                 }
             ]
         }
-    ]
-} 
+    ],
+    "models" : {
+        "Balloon": {
+            "properties": {
+                "size": {
+                    "type": "long"
+                }
+            }
+        },
+        "MemoryManager" : {
+            "description" : "memory manager",
+            "properties": {
+                "name":  {
+                    "type": "string",
+                    "description": "memory manager name"
+                },
+                "count": {
+                    "type": "long",
+                    "description": "total number of collections that have occurred"
+                },
+                "time": {
+                    "type": "long",
+                    "description": "accumulated collection elapsed time in ms"
+                },
+                "pools": {
+                    "type": "List[String]",
+                    "description": "List of Memeory Pool names"
+                }
+            }
+        }
+    }
+}
