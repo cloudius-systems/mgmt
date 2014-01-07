@@ -26,6 +26,16 @@ namespace miniweb {
  */
 class match_rule {
 public:
+	/**
+	 * The destructor deletes matchers.
+	 */
+	~match_rule() {
+		for (auto m : match_list) {
+			delete m;
+		}
+		delete handler;
+	}
+
     /**
      * Constructor with a handler
      * @param handler the handler to return when this match rule is met
