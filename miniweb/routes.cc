@@ -37,7 +37,7 @@ bool routes::handle(const string& path, const http::server::request& req,
         try {
             handler->handle(path, &params, req, rep);
         } catch (exception& e) {
-            cerr << "exception was caught for " << path << endl;
+            cerr << "exception was caught for " << path << ": " << e.what() << endl;
             handler->reply500(rep, 500, e.what());
             return false;
         }
