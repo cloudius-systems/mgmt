@@ -2,7 +2,6 @@
 #  -g    adds debugging information to the executable file
 #  -Wall turns on most, but not all, compiler warnings
 CXXFLAGS  = -g -Wall -std=c++11 -fPIC
-CPPFLAGS = -E
 
 # the build target executable:
 TARGET = miniweb
