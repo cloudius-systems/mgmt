@@ -25,7 +25,7 @@ namespace http {
 namespace server {
 
 request_handler::request_handler(const boost::program_options::variables_map* config,
-                                 miniweb::routes* routes)
+                                 httpserver::routes* routes)
     : config(config)
     , routes(routes)
 {

@@ -42,7 +42,7 @@ public:
      * @param routes the routes object
      */
     explicit server(const boost::program_options::variables_map* config,
-                    miniweb::routes* routes);
+                    httpserver::routes* routes);
 
     server(const server&) = delete;
 

@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <string>
 
-namespace miniweb {
+namespace httpserver {
 
 typedef std::unordered_map<std::string, std::string> parameters;
 

@@ -42,7 +42,7 @@ public:
      * @param routes the routes object
      */
     explicit request_handler(const boost::program_options::variables_map* config,
-                             miniweb::routes* routes);
+                             httpserver::routes* routes);
 
     request_handler(const request_handler&) = delete;
 
@@ -58,7 +58,7 @@ public:
 
 private:
     const boost::program_options::variables_map* config;
-    miniweb::routes* routes;
+    httpserver::routes* routes;
 
     /**
      * Perform URL-decoding on a string. Returns false if the encoding was

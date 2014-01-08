@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 
-namespace miniweb {
+namespace httpserver {
 
 using namespace std;
 

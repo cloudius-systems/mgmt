@@ -15,13 +15,13 @@
 #include <unordered_map>
 #include <functional>
 
-namespace miniweb {
+namespace httpserver {
 
 typedef const http::server::request& const_req;
 
 /**
  * handlers holds the logic for serving an incoming request.
- * All handlers inherit from the base miniweb_handler and
+ * All handlers inherit from the base httpserver_handler and
  * implement the handle method.
  *
  * A few general purpose handler are included here.

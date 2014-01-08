@@ -8,7 +8,7 @@
 #include "routes.hh"
 #include "reply.hh"
 
-namespace miniweb {
+namespace httpserver {
 
 using namespace std;
 

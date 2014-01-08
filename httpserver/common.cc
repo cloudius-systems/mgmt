@@ -6,7 +6,7 @@
  */
 #include "common.hh"
 
-namespace miniweb {
+namespace httpserver {
 
 operation_type str2type(const std::string& type)
 {

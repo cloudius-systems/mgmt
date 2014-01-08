@@ -4,7 +4,7 @@
 CXXFLAGS  = -g -Wall -std=c++11 -fPIC
 
 # the build target executable:
-TARGET = miniweb
+TARGET = httpserver
 CPP_FILES := $(wildcard *.cc)
 OBJ_FILES := $(addprefix obj/,$(CPP_FILES:.cc=.o))
 

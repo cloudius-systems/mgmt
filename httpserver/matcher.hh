@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace miniweb {
+namespace httpserver {
 
 /**
  * a base class for the url matching.

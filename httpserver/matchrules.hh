@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-namespace miniweb {
+namespace httpserver {
 
 /**
  * match_rule check if a url matches criteria, that can contains

@@ -17,7 +17,7 @@
 #include <iostream>
 #include <string>
 
-using namespace miniweb;
+using namespace httpserver;
 
 namespace po = boost::program_options;
 

@@ -19,7 +19,7 @@ namespace http {
 namespace server {
 
 server::server(const boost::program_options::variables_map* config,
-               miniweb::routes* routes)
+               httpserver::routes* routes)
     : io_service_()
     , signals_(io_service_)
     , acceptor_(io_service_)

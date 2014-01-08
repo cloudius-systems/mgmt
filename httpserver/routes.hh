@@ -18,7 +18,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace miniweb {
+namespace httpserver {
 
 /**
  * routes object do the request dispatching according to the url.
