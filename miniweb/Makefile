@@ -11,21 +11,24 @@ OBJ_FILES := $(addprefix obj/,$(CPP_FILES:.cc=.o))
 
 LIBS = -lpthread -lboost_system-mt -lboost_filesystem-mt -lboost_program_options
 
+quiet = $(if $V, $1, @echo " $2"; $1)
+very-quiet = $(if $V, $1, @$1)
+
 all: init $(TARGET) $(TARGET).so
 
 init:
-	mkdir -p obj
+	$(call very-quiet, mkdir -p obj)
 
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $^ $(LIBS) 
+	$(call quiet, $(CXX) $(CXXFLAGS) -o $(TARGET) $^ $(LIBS), LINK $@)
 
 $(TARGET).so: $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) -shared -o $(TARGET).so $^ $(LIBS)
+	$(call quiet, $(CXX) $(CXXFLAGS) -shared -o $(TARGET).so $^ $(LIBS), LINK $@)
 
 obj/%.o: %.cc
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(call quiet, $(CXX) $(CXXFLAGS) -c -o $@ $<, CXX $@)
 
 clean:
-	$(RM) $(TARGET)
-	$(RM) $(TARGET).so
-	$(RM) -rf obj/*
+	$(call quiet, $(RM) $(TARGET), CLEAN)
+	$(call very-quiet, $(RM) $(TARGET).so)
+	$(call very-quiet, $(RM) -rf obj/*)
