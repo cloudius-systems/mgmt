@@ -9,7 +9,10 @@ TARGET = miniweb
 CPP_FILES := $(wildcard *.cc)
 OBJ_FILES := $(addprefix obj/,$(CPP_FILES:.cc=.o))
 
-all: $(TARGET) $(TARGET).so
+all: init $(TARGET) $(TARGET).so
+
+init:
+	mkdir -p obj
 
 $(TARGET): $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $^ -lpthread -lboost_system-mt -lboost_filesystem-mt -lboost_program_options
