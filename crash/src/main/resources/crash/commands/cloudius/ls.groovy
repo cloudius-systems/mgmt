@@ -119,7 +119,7 @@ class ls extends OSvCommand implements Completer {
       if (resolvedPath.isDirectory()) {
         def listFiles = resolvedPath.listFiles()
         if (!listFiles) {
-          error("cannot open directory ${path.lbl}: Persmission denied")
+          error("cannot open directory ${path.lbl}: Permission denied")
           return ''
         }
 
