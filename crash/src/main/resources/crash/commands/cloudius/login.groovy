@@ -20,18 +20,6 @@ registerTests = { force = false ->
 }
 registerTests()
 
-welcome = { ->
-  return """\
-  ____   _____
- / __ \\ / ____|
-| |  | | (_____   __
-| |  | |\\___ \\ \\ / /
-| |__| |____) \\ V /
- \\____/|_____/ \\_/
-
-"""
-}
-
 prompt = { ->
   return "[${getCurrentPath().getPath()}]% "
 }
