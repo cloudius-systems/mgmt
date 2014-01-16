@@ -1,8 +1,6 @@
 def logDir = System.getProperty("log.dir") ?: "/var/log";
 def logFile = "${logDir}/mgmt.log"
 
-println "Using log file: ${logFile}"
-
 appender("FILE", RollingFileAppender) {
     append = true
     file = "${logFile}"
