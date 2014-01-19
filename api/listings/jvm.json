@@ -159,7 +159,8 @@
                     "description": "accumulated collection elapsed time in ms"
                 },
                 "pools": {
-                    "type": "List[String]",
+                    "type": "array",
+                    "items":{"type":"string"},
                     "description": "List of Memeory Pool names"
                 }
             }
