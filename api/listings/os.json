@@ -1,7 +1,7 @@
 {
     "apiVersion": "0.0.1",
     "swaggerVersion": "1.2",
-    "basePath": "https://osv.io/api",
+    "basePath": "http://{$Host}",
     "resourcePath": "/os",
     "produces": [
         "application/json",
@@ -51,9 +51,9 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "Last time the system was boot",
-                    "notes": "Last time the system was boot",
-                    "responseClass": "dateTime",
+                    "summary": "Time in seconds since the system was boot",
+                    "notes": "Time in seconds since the system was boot",
+                    "responseClass": "long",
                     "nickname": "getLastBootUpTime",
                     "produces": [
                         "application/json",
@@ -116,21 +116,6 @@
                         "application/json",
                         "application/xml"
                     ],
-                    "parameters": [
-                    ],
-                    "deprecated": "false"
-                }
-            ]
-        },
-        {
-            "path": "/os/reboot",
-            "operations": [
-                {
-                    "method": "POST",
-                    "summary": "reboot the OS",
-                    "notes": "",
-                    "responseClass": "",
-                    "nickname": "reboot",
                     "parameters": [
                     ],
                     "deprecated": "false"
