@@ -35,8 +35,8 @@ public class OSvCommand extends CRaSHCommand {
    * Decides whether to daemonize a closure or not
    *
    * @param unmatched The command line arguments, if it ends with a & then closure will be executed in a different thread.
-   * @param closure The closure to call, receives back the command line arguments (argv).
-   *                If closure was executed in a different thread (i.e. daemonized), receives argv without &.
+   * @param closure   The closure to call, receives back the command line arguments (argv).
+   *                  If closure was executed in a different thread (i.e. daemonized), receives argv without &.
    */
   public void daemonizeIfNeeded(final String unmatched, final Closure closure) {
     final boolean daemonize = unmatched.length() > 0 && unmatched.lastIndexOf('&') == unmatched.length() - 1;
@@ -59,9 +59,9 @@ public class OSvCommand extends CRaSHCommand {
    * Builds a Completion.Builder object from a given list of strings, using the provided prefix. This structure
    * basically repeated itself in completion methods.
    *
-   * @param options The options to build the list from.
+   * @param options   The options to build the list from.
    * @param parameter The parameter which is the completion target, currently not used in this method.
-   * @param prefix The provided prefix.
+   * @param prefix    The provided prefix.
    * @return Completion.Builder instance which includes all of the matching entries.
    */
   public static Completion.Builder complete(ArrayList<String> options, ParameterDescriptor parameter, String prefix) {

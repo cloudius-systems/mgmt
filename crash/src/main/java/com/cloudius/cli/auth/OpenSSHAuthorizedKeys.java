@@ -14,7 +14,9 @@ public class OpenSSHAuthorizedKeys extends CRaSHPlugin<AuthenticationPlugin> imp
 
   private OpenSSHKeyDecoder openSSHKeyDecoder = new OpenSSHKeyDecoder();
 
-  /** The SSH authorized keys path. */
+  /**
+   * The SSH authorized keys path.
+   */
   public static final PropertyDescriptor<String> AUTHORIZED_KEYS_PATH = PropertyDescriptor.create(
       "auth.openssh.authorized_keys",
       "/etc/ssh/authorized_keys",

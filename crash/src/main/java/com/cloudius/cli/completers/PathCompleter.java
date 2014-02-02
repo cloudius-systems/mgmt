@@ -6,6 +6,7 @@ import java.io.File;
 
 public class PathCompleter extends FileCompleter {
   private File currentPath;
+
   public PathCompleter(File currentPath) {
     this.currentPath = currentPath;
   }
