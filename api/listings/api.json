@@ -1,7 +1,7 @@
 {
     "apiVersion": "0.0.1",
     "swaggerVersion": "1.2",
-    "basePath": "https://osv.io/api",
+    "basePath": "http://{{Host}}",
     "resourcePath": "/api",
     "produces": [
         "application/json",
