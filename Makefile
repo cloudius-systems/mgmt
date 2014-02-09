@@ -20,3 +20,6 @@ clean-httpserver:
 
 clean-gradle:
 	$(call quiet, cd mgmt && ./gradlew --daemon clean >> /dev/null, GRADLE CLEAN)
+
+check:
+	cd ../ && ./mgmt/tests/testhttpserver.py
