@@ -1,7 +1,6 @@
 package com.cloudius.cli.auth;
 
-import sun.misc.BASE64Decoder;
-
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.PublicKey;
@@ -11,7 +10,6 @@ import java.security.spec.RSAPublicKeySpec;
 public class OpenSSHKeyDecoder {
   private byte[] buffer;
   private int pos;
-  private BASE64Decoder base64Decoder = new BASE64Decoder();
 
   public PublicKey decodePublicKey(String keyLine) throws Exception {
     buffer = null;
@@ -19,7 +17,7 @@ public class OpenSSHKeyDecoder {
 
     for (String part : keyLine.split(" ")) {
       if (part.startsWith("AAAA")) {
-        buffer = base64Decoder.decodeBuffer(part);
+        buffer = DatatypeConverter.parseBase64Binary(part);
         break;
       }
     }
