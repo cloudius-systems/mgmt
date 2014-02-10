@@ -20,6 +20,7 @@ registerTests = { force = false ->
 }
 registerTests()
 
+welcome = { "" }
 prompt = { ->
   return "[${getCurrentPath().getPath()}]% "
 }
