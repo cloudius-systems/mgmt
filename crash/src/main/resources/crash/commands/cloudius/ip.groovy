@@ -1,8 +1,8 @@
-package commands.cloudius
+package crash.commands.cloudius
 
 import com.cloudius.cli.command.OSvCommand
 import com.cloudius.net.Route
-import com.cloudius.util.ELFLoader
+import com.cloudius.cli.util.ELFLoader
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Man

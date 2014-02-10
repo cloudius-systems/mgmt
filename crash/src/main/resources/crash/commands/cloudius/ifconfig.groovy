@@ -1,7 +1,7 @@
 package crash.commands.cloudius
 
 import com.cloudius.net.IFConfig
-import com.cloudius.util.ELFLoader
+import com.cloudius.cli.util.ELFLoader
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 
