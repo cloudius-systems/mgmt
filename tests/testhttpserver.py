@@ -27,6 +27,7 @@ parser.add_argument('--ip', help='set the ip address',
                     default='localhost')
 
 config = parser.parse_args()
+
 class test_httpserver(unittest.TestCase):
     @classmethod
     def get_url(cls, uri):
@@ -34,7 +35,7 @@ class test_httpserver(unittest.TestCase):
 
     @classmethod
     def get_json_api(cls, name):
-        json_data = open(config.jsondir + name)
+        json_data = open(os.path.join(config.jsondir, name))
         data = json.load(json_data)
         json_data.close()
         return data
@@ -71,7 +72,7 @@ class test_httpserver(unittest.TestCase):
 
     def test_os_version(self):
         path = self.path_by_nick(self.os_api, "getOSversion")
-        self.assertRegexpMatches(self.curl(path), "v0" , path)
+        self.assertRegexpMatches(self.curl(path), "v0\\.\\d+\\-\\d+\\-[0-9a-z]+" , path)
 
     def test_manufactor(self):
         self.validate_path(self.os_api, "getOSmanufacturer", "cloudius-systems")
@@ -85,18 +86,17 @@ class test_httpserver(unittest.TestCase):
     def test_os_date(self):
         path = self.path_by_nick(self.os_api, "getDate")
         val = self.curl(path).encode('ascii', 'ignore')
-        self.assertRegexpMatches(val, "... ...  \d+ \d\d:\d\d:\d\d 20..", path)
-
+        self.assertRegexpMatches(val, "...\\s+...\\s+\\d+\\s+\\d\\d:\\d\\d:\\d\\d\\s+20..", path)
 
     def test_os_total_memory(self):
         path = self.path_by_nick(self.os_api, "getTotalVirtualMemorySize")
         val = self.curl(path)
-        self.assertGreater(val, 1024 * 1024 * 256, msg= " Memory should be greater than 256Mb ")
+        self.assertGreater(val, 1024 * 1024 * 256, msg="Memory should be greater than 256Mb")
 
     def test_os_free_memory(self):
         path = self.path_by_nick(self.os_api, "getFreeVirtualMemory")
         val = self.curl(path)
-        self.assertGreater(val, 1024 * 1024 * 256, msg=" Free memory should be greater than 256Mb ")
+        self.assertGreater(val, 1024 * 1024 * 256, msg="Free memory should be greater than 256Mb")
 
     @classmethod
     def curl(cls, api, post=False):
@@ -120,12 +120,15 @@ class test_httpserver(unittest.TestCase):
         path = cls.path_by_nick(cls.os_api, "shutdown")
         try:
             cls.curl(path, True)
-        except Exception as e:
-            None
+        except:
+            pass
+        retry = 10
 
-        cls.os_process.poll()
-        if cls.os_process.returncode == None:
-            cls.os_process.terminate()
+        while cls.os_process.poll() == None:
+            retry -= 1
+            if retry == 0:
+                raise Exception("Fail to shutdown server")
+            time.sleep(1)
 
     @classmethod
     def setUpClass(cls):
@@ -133,10 +136,10 @@ class test_httpserver(unittest.TestCase):
             cls.os_process = cls.exec_os()
         cls.os_api = cls.get_json_api("os.json")
         retry = 10
-        while (not cls.is_reachable()):
+        while not cls.is_reachable():
             time.sleep(1)
             retry -= 1
-            if (retry == 0):
+            if retry == 0:
                 cls.shutdown()
                 raise Exception("Server is down")
 
@@ -145,4 +148,5 @@ class test_httpserver(unittest.TestCase):
         cls.shutdown()
 
 if __name__ == '__main__':
+    del sys.argv[1:]
     unittest.main()
