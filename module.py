@@ -32,3 +32,5 @@ full = [
     shell,
     delayed(web, 3000)
 ]
+
+default = full
