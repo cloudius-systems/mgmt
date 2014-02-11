@@ -72,5 +72,6 @@ jar {
     exclude('META-INF/BCKEY.*') 
     exclude('crash/commands/base/login.groovy')
     exclude('crash/commands/base/java.groovy')
+    exclude('crash/commands/base/sleep.groovy')
     manifest.attributes('Main-Class': 'com.cloudius.cli.Main')
 }
