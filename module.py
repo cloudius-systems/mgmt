@@ -23,14 +23,10 @@ shell = run_java(
             '-jar', '/usr/mgmt/crash-1.0.0.jar'
         ])
 
-web = run_java(
-        args=_logging_opts + ['-jar', _web_jar, 'app', 'prod'])
-
 httpserver = api.run('/usr/mgmt/httpserver.so')
 
 full = [
     shell,
-    delayed(web, 3000)
 ]
 
 default = full
