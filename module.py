@@ -27,6 +27,7 @@ httpserver = api.run('/usr/mgmt/httpserver.so')
 
 full = [
     shell,
+    httpserver,
 ]
 
 default = full
