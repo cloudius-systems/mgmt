@@ -28,25 +28,6 @@
             ]
         },
         {
-            "path": "/jvm/memory/balloon",
-            "operations": [
-                {
-                    "method": "GET",
-                    "summary": "JVM memory Balloon infomration",
-                    "notes": "",
-                    "responseClass": "Balloon",
-                    "nickname": "getBalloon",
-                    "produces": [
-                        "application/json",
-                        "application/xml"
-                    ],
-                    "parameters": [
-                    ],
-                    "deprecated": "false"
-                }
-            ]
-        },
-        {
             "path": "/jvm/memory/gc",
             "operations": [
                 {
