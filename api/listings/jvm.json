@@ -66,13 +66,13 @@
             ]
         },
         {
-            "path": "/jvm/jmx",
+            "path": "/jvm/jmx/{mbean}",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "get a runtime MBean value",
-                    "notes": "",
-                    "responseClass": "string",
+                    "notes": "get a runtime Mbean value",
+                    "responseClass": "object",
                     "nickname": "getJMXvalue",
                     "produces": [
                         "application/json",
@@ -80,12 +80,12 @@
                     ],
                     "parameters": [
                         {
-                            "name": "path",
+                            "name": "mbean",
                             "description": "JMX path to probe",
                             "required": true,
                             "allowMultiple": false,
                             "dataType": "string",
-                            "paramType": "query"
+                            "paramType": "path"
                         }
                     ],
                     "deprecated": "false"
@@ -93,7 +93,7 @@
             ]
         },
         {
-            "path": "/jvm/jmx",
+            "path": "/jvm/jmx/{mbean}",
             "operations": [
                 {
                     "method": "POST",
@@ -103,8 +103,16 @@
                     "nickname": "setJMXvalue",
                     "parameters": [
                         {
-                            "name": "path",
+                            "name": "mbean",
                             "description": "JMX path to update",
+                            "required": true,
+                            "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "value",
+                            "description": "value to set",
                             "required": true,
                             "allowMultiple": false,
                             "dataType": "string",
