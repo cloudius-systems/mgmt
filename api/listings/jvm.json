@@ -54,7 +54,7 @@
                     "summary": "Force GC",
                     "notes": "",
                     "responseClass": "void",
-                    "nickname": "getGCcount",
+                    "nickname": "forceGC",
                     "produces": [
                         "application/json",
                         "application/xml"
