@@ -93,6 +93,25 @@
             ]
         },
         {
+            "path": "/jvm/jmx/",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "get a list of all MBean names",
+                    "notes": "",
+                    "responseClass":  "List[String]",
+                    "nickname": "getMbeanList",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
             "path": "/jvm/jmx/{mbean}",
             "operations": [
                 {
