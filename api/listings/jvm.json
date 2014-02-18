@@ -112,7 +112,7 @@
             ]
         },
         {
-            "path": "/jvm/jmx/{mbean}",
+            "path": "/jvm/jmx/{mbean}/{attribute}",
             "operations": [
                 {
                     "method": "POST",
@@ -126,6 +126,14 @@
                             "description": "JMX path to update",
                             "required": true,
                             "allowMultiple": false,
+                            "dataType": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "attribute",
+                            "description": "the attribute name to set",
+                            "required": true,
+                            "allowMultiple": true,
                             "dataType": "string",
                             "paramType": "path"
                         },
