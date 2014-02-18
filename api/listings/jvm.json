@@ -51,8 +51,8 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "get GC related infomrtion",
-                    "notes": "return a list of Memory Managers, each with its related infomration",
+                    "summary": "get GC related information",
+                    "notes": "return a list of Memory Managers, each with its related information",
                     "responseClass": "List[MemoryManager]",
                     "nickname": "getGCinfo",
                     "produces": [
@@ -161,7 +161,7 @@
                 "pools": {
                     "type": "array",
                     "items":{"type":"string"},
-                    "description": "List of Memeory Pool names"
+                    "description": "List of Memory Pool names"
                 }
             }
         }
