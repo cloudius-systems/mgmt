@@ -105,6 +105,7 @@ class test_httpserver(unittest.TestCase):
             data = urllib.urlencode({'Fake' : 'data-to-become-post'})
             req = urllib2.Request(url, data)
             response = urllib2.urlopen(req)
+            return ""
         else:
             response = urllib2.urlopen(url)
         return json.load(response)
