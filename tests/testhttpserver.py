@@ -44,6 +44,9 @@ class test_httpserver(unittest.TestCase):
         self.assertGreaterEqual(val, low, msg=msg)
         self.assertLessEqual(val, high, msg=msg)
 
+    def assert_key_in(self, key, dic):
+        self.assertTrue(key in dic, key + " not found in dictionary " + json.dumps(dic))
+
     @classmethod
     def get_api(cls, api_definition, nickname):
         for api in api_definition["apis"]:
@@ -69,6 +72,10 @@ class test_httpserver(unittest.TestCase):
     def validate_path(self, api_definition, nickname, value):
         path = self.path_by_nick(api_definition, nickname)
         self.assertEqual(value, self.curl(path))
+
+    def validate_path_regex(self, api_definition, nickname, expr):
+        path = self.path_by_nick(api_definition, nickname)
+        self.assertRegexpMatches(self.curl(path), expr)
 
     def test_os_version(self):
         path = self.path_by_nick(self.os_api, "getOSversion")
