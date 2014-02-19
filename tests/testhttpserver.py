@@ -18,7 +18,9 @@ parser = argparse.ArgumentParser(description="""Testing the Httpserver""")
 
 parser.add_argument('--connect', help='Connect to an existing image', action='store_true')
 parser.add_argument('--run_script', help='path to the run image script', default='scripts/run.py')
-parser.add_argument('--cmd', help='the command to execute', default='"/usr/mgmt/httpserver.so"')
+parser.add_argument('--cmd', help='the command to execute',
+                    default="/usr/mgmt/httpserver.so&"
+                    "java.so io.osv.MultiJarLoader -mains /etc/javamains")
 parser.add_argument('--use_sudo', help='Use sudo with -n option instead of port forwarding', action='store_true')
 parser.add_argument('--jsondir', help='location of the json files', default='mgmt/api/listings/')
 parser.add_argument('--port', help='set the port number', type=int,
@@ -58,6 +60,10 @@ class test_httpserver(unittest.TestCase):
     def path_by_nick(cls, api_definition, nickname):
         api = cls.get_api(api_definition, nickname)
         return api["path"]
+    
+    @classmethod
+    def is_jvm_up(cls):
+         return cls.curl(cls.path_by_nick(cls.jvm_api, "getJavaVersion")) != ""
 
     @classmethod
     def is_reachable(cls):
@@ -65,7 +71,7 @@ class test_httpserver(unittest.TestCase):
         try:
             s.connect((config.ip, config.port))
             s.close()
-            return True
+            return cls.is_jvm_up()
         except socket.error:
             return False
 
@@ -146,6 +152,7 @@ class test_httpserver(unittest.TestCase):
         if not config.connect:
             cls.os_process = cls.exec_os()
         cls.os_api = cls.get_json_api("os.json")
+        cls.jvm_api = cls.get_json_api("jvm.json")
         retry = 10
         while not cls.is_reachable():
             time.sleep(1)
