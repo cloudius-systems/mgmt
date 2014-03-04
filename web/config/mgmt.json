@@ -1,6 +1,0 @@
-{
- "dev": {"uploads":"build/uploads", "apps":"build/apps"}, 
- "prod": {"uploads":"/usr/mgmt/uploads", "apps":"/usr/mgmt/apps"}
-}
-
-

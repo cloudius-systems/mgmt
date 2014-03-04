@@ -1,2 +1,0 @@
-require 'manager_test'
-

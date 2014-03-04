@@ -9,6 +9,9 @@ dependencies {
   compile group: 'org.crashub' , name:'crash.connectors.ssh', version:'1.3.0-beta13'
   compile group: 'jline' , name:'jline', version:'2.10'
   compile group: 'commons-io' , name:'commons-io', version:'2.4'
+  runtime group: 'org.bouncycastle' , name:'bcprov-jdk16', version:'1.46'
+  runtime group: 'ch.qos.logback' , name:'logback-classic', version:'1.0.13'
+  runtime group: 'org.slf4j' , name: 'jul-to-slf4j', version:'1.7.5'
 }
 
 def services = [
@@ -68,8 +71,7 @@ jar {
         into 'META-INF/services/'
       }
     }
-    exclude('org/bouncycastle/')
-    exclude('META-INF/BCKEY.*') 
+    exclude('META-INF/BCKEY.*')
     exclude('crash/commands/base/login.groovy')
     exclude('crash/commands/base/java.groovy')
     exclude('crash/commands/base/sleep.groovy')

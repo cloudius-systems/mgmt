@@ -3,7 +3,7 @@ module: all
 all: mk-gradle httpserver.so swagger-ui-lib
 
 mk-gradle:
-	./gradlew --daemon :web:jar build
+	./gradlew --daemon build
 
 httpserver.so:
 	make -C httpserver

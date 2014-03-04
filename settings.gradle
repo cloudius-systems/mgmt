@@ -1,1 +1,1 @@
-include 'web', 'crash', 'example'
+include 'crash', 'example'
