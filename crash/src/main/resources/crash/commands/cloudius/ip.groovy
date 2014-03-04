@@ -11,6 +11,7 @@ import org.crsh.cli.descriptor.ParameterDescriptor
 import org.crsh.cli.spi.Completer
 import org.crsh.cli.spi.Completion
 
+@Usage("manipulate ip configuration")
 class ip extends OSvCommand {
   @Usage("ip route")
   @Command

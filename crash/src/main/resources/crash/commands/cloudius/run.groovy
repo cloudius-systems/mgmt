@@ -6,13 +6,15 @@ import com.cloudius.cli.util.ELFLoader
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Required
+import org.crsh.cli.Usage
 import org.crsh.cli.descriptor.ParameterDescriptor
 import org.crsh.cli.spi.Completer
 import org.crsh.cli.spi.Completion
 
+@Usage("loads an ELF and runs it")
 class run extends OSvCommand implements Completer {
   @Command
-  void main(@Argument(completer = run.class) @Required String path) {
+  void main(@Argument(completer = run.class) @Usage("the ELF file to load") @Required String path) {
     def file = getResolvedPath(path)
 
     if (!file.exists()) {

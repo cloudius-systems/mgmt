@@ -5,11 +5,15 @@ import com.cloudius.trace.Callstack;
 import com.cloudius.trace.Counter;
 import org.crsh.cli.Argument;
 import org.crsh.cli.Required;
-import org.crsh.cli.Command;
+import org.crsh.cli.Command
+import org.crsh.cli.Usage;
+
 import java.util.List;
 
+@Usage("view tracepoint callstacks")
 public class perf {
     @Command
+    @Usage("list available tracepoints")
     public void list() {
         out.print("available tracepoints:\n\n");
         for (Tracepoint tp : Tracepoint.list()) {
@@ -18,7 +22,8 @@ public class perf {
     }
 
     @Command
-    public void callstack(@Required @Argument String name) {
+    @Usage("print the callstack of a spcific tracepoint")
+    public void callstack(@Required @Usage("name of tracepoint") @Argument String name) {
         Tracepoint tp = new Tracepoint(name);
         Callstack[] traces = Callstack.collect(tp, 10, 20, 5000);
         if (traces.length == 0) {

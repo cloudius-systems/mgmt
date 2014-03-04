@@ -9,6 +9,7 @@ import org.crsh.cli.descriptor.ParameterDescriptor
 import org.crsh.cli.spi.Completer
 import org.crsh.cli.spi.Completion
 
+@Usage("runs OSv tests")
 class test implements Completer {
   @Usage("List available tests")
   @Command
@@ -19,7 +20,7 @@ class test implements Completer {
   @Usage("Invoke a test")
   @Command
   void invoke(
-    @Argument(completer = test.class) @Required String name
+    @Argument(completer = test.class) @Usage("test to invoke") @Required String name
   ) {
     if (!testRunner.getTestNames().find({ it == name })) {
       throw new ScriptException("test not found")

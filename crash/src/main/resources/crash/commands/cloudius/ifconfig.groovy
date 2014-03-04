@@ -4,7 +4,9 @@ import com.cloudius.net.IFConfig
 import com.cloudius.cli.util.ELFLoader
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
+import org.crsh.cli.Usage
 
+@Usage("configures a network interface")
 class ifconfig  {
   @Command
   void main(@Argument String ifname, @Argument String ip, @Argument String netmask) {

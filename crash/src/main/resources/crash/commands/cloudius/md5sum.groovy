@@ -5,14 +5,16 @@ import com.cloudius.util.MD5
 import org.crsh.cli.Argument
 import org.crsh.cli.Command
 import org.crsh.cli.Required
+import org.crsh.cli.Usage
 import org.crsh.cli.descriptor.ParameterDescriptor
 import org.crsh.cli.spi.Completer
 import org.crsh.cli.spi.Completion
 
+@Usage("compute and print MD5 sum of a file")
 class md5sum implements Completer {
   @Command
   Object main(
-    @Required @Argument(completer = md5sum.class) String path) {
+    @Required @Usage("path to file") @Argument(completer = md5sum.class) String path) {
     file = getResolvedPath(path)
     if (!file.exists()) {
         throw new ScriptException("no such file or directory")
