@@ -1,3 +1,5 @@
+quiet = $(if $V, $1, @echo " $2"; $1)
+
 module: all
 
 all: mk-gradle httpserver.so swagger-ui-lib
@@ -19,7 +21,7 @@ clean-httpserver:
 	make -C httpserver clean
 
 clean-gradle:
-	$(call quiet, cd mgmt && ./gradlew --daemon clean >> /dev/null, GRADLE CLEAN)
+	$(call quiet, ./gradlew --daemon clean >> /dev/null, GRADLE CLEAN)
 
 check:
 	cd ../ && ./mgmt/tests/testhttpserver.py
