@@ -107,7 +107,10 @@ class test_httpserver(unittest.TestCase):
             response = urllib2.urlopen(req)
             return ""
         else:
-            response = urllib2.urlopen(url)
+            try:
+                response = urllib2.urlopen(url)
+            except:
+                return ""
         return json.load(response)
 
     @classmethod
