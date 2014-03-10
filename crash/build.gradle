@@ -1,5 +1,3 @@
-import static groovy.io.FileType.FILES
-
 apply plugin: 'java'
 version = '1.0.0'
 
@@ -14,66 +12,14 @@ dependencies {
   runtime group: 'org.slf4j' , name: 'jul-to-slf4j', version:'1.7.5'
 }
 
-def services = [
-  "org.crsh.plugin.CRaSHPlugin": [
-    buildFile: "${buildDir}/plugins/META-INF/services/org.crsh.plugin.CRaSHPlugin",
-    match: ~/.*CRaSHPlugin\-\d+/
-  ],
-  "org.codehaus.groovy.transform.ASTTransformation": [
-    buildFile: "${buildDir}/plugins/META-INF/services/org.codehaus.groovy.transform.ASTTransformation",
-    match: ~/.*ASTTransformation\-\d+/
-  ],
-]
-
-task serviceConcat(type:Copy){
-  def i = 0
-  (configurations.compile.resolvedConfiguration.resolvedArtifacts.collect{ zipTree(it.file)  } +
-      fileTree(dir: 'src/main/resources')).each { d ->
-    from (d) {
-      rename ~/(${services.collect({ it.key }).join("|")})$/, "\$1-${i++}"
-	    include 'META-INF/services/**'
-    }
-  }
-  into 'build/plugins'
-  doLast {
-    services.each { name, props ->
-      def serviceFile = new File(props.buildFile)
-      // Remote previous content
-      if (serviceFile.exists()) {
-        serviceFile.delete()
-        serviceFile.createNewFile()
-      }
-
-      def lines = []
-      file('build/plugins/META-INF/services/').eachFileMatch(FILES, props.match) {
-        if (!lines.contains(it.text)) {
-          lines.add(it.text)
-          serviceFile << it.text
-        }
-      }
-    }
-  }
-
-  outputs.files services.collect({ name, props -> file(props.buildFile) })
+task copyDependencies(type: Copy) {
+  from configurations.runtime
+  into "${buildDir}/dependencies"
 }
 
-
 jar {
-    dependsOn configurations.runtime, serviceConcat
-    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
-      services.each {
-        exclude("META-INF/services/${it.key}")
-      }
-      exclude('crash/crash.properties')
+    dependsOn configurations.runtime, copyDependencies
+    manifest {
+      attributes('Main-Class': 'com.cloudius.cli.Main')
     }
-    services.each { name, props ->
-      from(props.buildFile) {
-        into 'META-INF/services/'
-      }
-    }
-    exclude('META-INF/BCKEY.*')
-    exclude('crash/commands/base/login.groovy')
-    exclude('crash/commands/base/java.groovy')
-    exclude('crash/commands/base/sleep.groovy')
-    manifest.attributes('Main-Class': 'com.cloudius.cli.Main')
 }
