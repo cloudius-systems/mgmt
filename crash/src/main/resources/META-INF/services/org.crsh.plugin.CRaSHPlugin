@@ -2,3 +2,4 @@ com.cloudius.cli.plugins.SCPCommandPlugin
 com.cloudius.cli.plugins.SftpSubsystemPlugin
 com.cloudius.cli.auth.OpenSSHAuthorizedKeys
 com.cloudius.cli.auth.EC2Metadata
+com.cloudius.cli.auth.GCEMetadata
