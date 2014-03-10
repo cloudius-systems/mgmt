@@ -1,5 +1,6 @@
 package crash.commands.cloudius
 
+import com.cloudius.cli.command.FormatSizeOptions
 import com.cloudius.cli.command.OSvCommand
 import com.cloudius.cli.util.OSvAPI
 import com.cloudius.cli.util.SizeFormatter
@@ -13,11 +14,11 @@ import org.crsh.text.ui.UIBuilder
 public class free extends OSvCommand {
   @Command
   Object main(
-      @Option(names=['b']) @Usage("Display the amount of memory in bytes.") Boolean isB,
-      @Option(names=['k']) @Usage("Display the amount of memory in kilobytes. This is the default.") Boolean isKb,
-      @Option(names=['m']) @Usage("Display the amount of memory in megabytes.") Boolean isMb,
-      @Option(names=['g']) @Usage("Display the amount of memory in gigabytes.") Boolean isGb,
-      @Option(names=['H']) @Usage("Show all output fields automatically scaled to shortest three digit unit and display the units of print out.") Boolean isH) {
+      @FormatSizeOptions.B Boolean isB,
+      @FormatSizeOptions.Kb Boolean isKb,
+      @FormatSizeOptions.Mb Boolean isMb,
+      @FormatSizeOptions.Gb Boolean isGb,
+      @FormatSizeOptions.Human Boolean isH) {
     int total = Integer.parseInt(OSvAPI.get("/os/memory/total"))
     int free  = Integer.parseInt(OSvAPI.get("/os/memory/free"))
 
