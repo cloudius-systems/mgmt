@@ -1,7 +1,6 @@
 package com.cloudius.cli.auth;
 
 import org.crsh.auth.AuthenticationPlugin;
-import org.crsh.plugin.CRaSHPlugin;
 import org.crsh.plugin.PropertyDescriptor;
 
 import java.io.BufferedReader;
@@ -10,16 +9,12 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
-public class EC2Metadata extends CRaSHPlugin<AuthenticationPlugin> implements AuthenticationPlugin<PublicKey> {
-
-  // To decode the public key
-  private OpenSSHKeyDecoder openSSHKeyDecoder = new OpenSSHKeyDecoder();
+public class EC2Metadata extends CloudMetadataAuthPlugin {
 
   // A base URL to query for public keys of the instance
   public static final PropertyDescriptor<String> PUBLIC_KEYS_URL = PropertyDescriptor.create(
@@ -31,6 +26,11 @@ public class EC2Metadata extends CRaSHPlugin<AuthenticationPlugin> implements Au
   private int connectTimeout = 1000;
 
   @Override
+  protected Iterable<PropertyDescriptor<?>> createConfigurationCapabilities() {
+    return Arrays.<PropertyDescriptor<?>>asList(PUBLIC_KEYS_URL);
+  }
+
+  @Override
   public AuthenticationPlugin getImplementation() {
     return this;
   }
@@ -40,36 +40,14 @@ public class EC2Metadata extends CRaSHPlugin<AuthenticationPlugin> implements Au
     return "ec2_metadata";
   }
 
-  @Override
-  public Class<PublicKey> getCredentialType() {
-    return PublicKey.class;
-  }
-
-  @Override
-  protected Iterable<PropertyDescriptor<?>> createConfigurationCapabilities() {
-    return Arrays.<PropertyDescriptor<?>>asList(PUBLIC_KEYS_URL);
-  }
-
-  @Override
-  public boolean authenticate(String username, PublicKey credential) throws Exception {
-    // Username is not important for this implementation
-    for (String keyLine : getPublicKeys()) {
-      if (credential.equals(openSSHKeyDecoder.decodePublicKey(keyLine))) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private ArrayList<String> getPublicKeys() throws MalformedURLException {
+  protected ArrayList<String> getPublicKeys() throws MalformedURLException {
     String publicKeysURL = getContext().getProperty(PUBLIC_KEYS_URL);
     if (publicKeysURL == null) {
       publicKeysURL = PUBLIC_KEYS_URL.getDefaultValue();
     }
 
     ArrayList<String> availableKeys = getURL(new URL(publicKeysURL));
-    ArrayList<String> ret = new ArrayList<String>(availableKeys.size());
+    ArrayList<String> ret = new ArrayList<>(availableKeys.size());
 
     for (String line : availableKeys) {
       if (line.contains("=")) {
@@ -85,7 +63,7 @@ public class EC2Metadata extends CRaSHPlugin<AuthenticationPlugin> implements Au
   }
 
   private ArrayList<String> getURL(URL url) {
-    ArrayList<String> ret = new ArrayList<String>();
+    ArrayList<String> ret = new ArrayList<>();
 
     try {
       URLConnection urlConnection = url.openConnection();
