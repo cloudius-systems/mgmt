@@ -9,6 +9,8 @@ import org.crsh.cli.Command
 import org.crsh.cli.Usage;
 
 import java.util.List;
+import java.lang.Thread;
+import java.lang.String;
 
 @Usage("view tracepoint callstacks")
 public class perf {
@@ -38,5 +40,40 @@ public class perf {
                 out.print('\n');
             }
         }
+    }
+
+    @Command
+    public void stat(@Required @Argument String tracepoints) {
+        String[] names = tracepoints.split(',');
+	Tracepoint[] tps = new Tracepoint[names.length];
+	Counter[] counts = new Counter[names.length];
+	long[] lasts = new long[names.length];
+	int[] lens = new int[names.length];
+	for (int i = 0; i < names.length; i++) {
+	    tps[i] = new Tracepoint(names[i]);
+	    counts[i] = new Counter(tps[i]);
+	    lasts[i] = 0;
+	    lens[i] = names[i].length()+1;
+	    if(lens[i] < 7) {
+	         lens[i] = 7;
+	    }
+	}
+	int line = 0;
+	while (true) {
+            if (line++ % 23 == 0) {
+	        for (int i = 0; i < names.length; i++) {
+	            out.print(sprintf("%"+lens[i]+"s", tps[i].getName()));
+		}
+		out.print("\n");
+	    }
+	    for (int i = 0; i < names.length; i++) {
+	        long now = counts[i].read();
+	        out.print(sprintf("%"+lens[i]+"d", now - lasts[i]));
+	        lasts[i] = now;
+	    }
+	    out.print("\n");
+	    out.flush();
+	    Thread.sleep(1000);
+	}
     }
 }
