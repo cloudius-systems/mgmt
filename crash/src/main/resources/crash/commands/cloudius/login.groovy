@@ -5,8 +5,9 @@ import com.cloudius.cli.tests.TestRunner
 // Path related
 currentPath = new File('/')
 
+lastPath = null
 getCurrentPath = { currentPath }
-setCurrentPath = { currentPath = it }
+setCurrentPath = { (lastPath, currentPath) = [currentPath, it] }
 getResolvedPath = { it.startsWith('/') ? new File(it) : new File(getCurrentPath(), it) }
 
 // Test runner

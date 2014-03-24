@@ -15,7 +15,11 @@ class cd implements Completer {
     @Argument(completer = cd.class) String path) {
 
     if (path == null) {
-      newPath = new File('/')
+      if (unmatched == '-' && lastPath != null) {
+        newPath = lastPath
+      } else {
+        newPath = new File('/')
+      }
     } else if (path.startsWith('/')) {
       newPath = new File(path).getCanonicalFile()
     } else {
