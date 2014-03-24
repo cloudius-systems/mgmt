@@ -16,7 +16,7 @@ public class GCEMetadata extends CloudMetadataAuthPlugin {
   // A base URL to query for public keys of the instance
   public static final PropertyDescriptor<String> PUBLIC_KEYS_URL = PropertyDescriptor.create(
       "auth.gce_metadata.public_keys_url",
-      "http://metadata/computeMetadata/v1/project/attributes/sshKeys",
+      "http://169.254.169.254/computeMetadata/v1/project/attributes/sshKeys",
       "URL to look for public keys");
 
   private int connectTimeout = 1000;
