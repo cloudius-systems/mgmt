@@ -28,7 +28,7 @@ public class CRaSH {
 
     //
     bootstrap.addToCmdPath(Path.get("/crash/commands/cloudius/"));
-    bootstrap.addToConfPath(Path.get("/crash/"));
+    bootstrap.addToConfPath(Path.get("/crash/cloudius/"));
 
     // Do bootstrap
     bootstrap.bootstrap();
