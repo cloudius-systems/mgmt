@@ -19,6 +19,8 @@
 #include <sstream>
 #include "api/os.hh"
 #include "api/files_mapping.hh"
+#include "api/jvm.hh"
+#include "api/file.hh"
 
 using namespace httpserver;
 
@@ -46,7 +48,8 @@ int main(int argc, char* argv[])
     routes routes;
     api::os::init(routes);
     api::files_mapping::init(routes);
-
+    api::file::init(routes);
+    api::jvm::init(routes);
     try {
         http::server::server s(&config, &routes);
         s.run();

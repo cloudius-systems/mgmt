@@ -5,6 +5,14 @@
         {              
             "path": "/../listings/os.json",
             "description": "OS core API"
+        },
+        {              
+            "path": "/../listings/jvm.json",
+            "description": "JVM API"
+        },
+        {              
+            "path": "/../listings/file.json",
+            "description": "file API"
         }
     ]
 }

@@ -84,11 +84,12 @@ public:
      * rules are search by the order they were added.
      * First in higher priority
      * @param rule a rule to add
+     * @param type the operation type
      * @return it self
      */
-    routes& add(match_rule* rule)
+    routes& add(match_rule* rule, operation_type type = GET)
     {
-        rules.push_back(rule);
+        rules[type].push_back(rule);
         return *this;
     }
 
@@ -158,8 +159,8 @@ private:
      */
     std::string normalize_url(const std::string& url, std::string& param_part);
 
-    std::unordered_map<std::string, handler_base*> map[2];
-    std::vector<match_rule*> rules;
+    std::unordered_map<std::string, handler_base*> map[NUM_OPERATION];
+    std::vector<match_rule*> rules[NUM_OPERATION];
 };
 
 }

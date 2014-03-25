@@ -19,12 +19,57 @@
 #include <boost/asio.hpp>
 #include <array>
 #include <memory>
+#include <iostream>
+#include <fstream>
 
 namespace http {
 
 namespace server {
 
+typedef std::array<char, 8192> buffer_type;
+
 class connection_manager;
+
+class multipart_parser {
+public:
+    multipart_parser();
+    void set_boundary(const std::string& _boundary);
+
+    request_parser::result_type parse(request& req, buffer_type::pointer & bg,
+                                      const buffer_type::pointer & end);
+    void close()
+    {
+        upload_file.close();
+    }
+
+    bool is_done() {
+        return mode == DONE;
+    }
+private:
+    enum reading_mode {
+        WAIT_BOUNDARY,
+        WAIT_CONTENT_DISPOSITION,
+        WAIT_EMPTY,
+        WRITE_TO_FILE,
+        DONE
+    };
+
+    void set_original_file(request& req, const std::string val);
+
+    void open_tmp_file(request& req);
+
+    reading_mode mode;
+
+    size_t empty_lines;
+
+    size_t pos_in_file;
+
+    std::string boundary;
+
+    std::ofstream upload_file;
+
+    size_t header_length;
+};
 
 /**
  * Represents a single connection from a client.
@@ -65,10 +110,30 @@ private:
     void do_read();
 
     /**
+     * Perform an asynchronous read operation of a multipart.
+     * and save it to file
+     *
+     */
+    void do_read_mp();
+
+    /**
      * Perform an asynchronous write operation.
      *
      */
     void do_write();
+
+    /**
+     * check if the request has content
+     * and update it accordingly.
+     * @return false on error
+     */
+    bool set_content_type();
+
+
+    /**
+     * handle complete of multipart read.
+     */
+    void on_complete_multiplart();
 
     /**
      * Socket for the connection.
@@ -92,7 +157,7 @@ private:
      * Buffer for incoming data.
      *
      */
-    std::array<char, 8192> buffer_;
+    buffer_type buffer_;
 
     /**
      * The incoming request.
@@ -111,6 +176,8 @@ private:
      *
      */
     reply reply_;
+
+    multipart_parser multipart;
 };
 
 typedef std::shared_ptr<connection> connection_ptr;

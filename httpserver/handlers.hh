@@ -14,10 +14,45 @@
 
 #include <unordered_map>
 #include <functional>
+#include <exception>
 
 namespace httpserver {
 
 typedef const http::server::request& const_req;
+
+class not_found_exception : public std::exception
+{
+public:
+    not_found_exception(const std::string& msg)
+        : _msg(msg)
+    {
+    }
+    virtual const char* what() const throw ()
+    {
+        return _msg.c_str();
+    }
+
+private:
+    std::string _msg;
+
+};
+
+class bad_param_exception : public std::exception
+{
+public:
+    bad_param_exception(const std::string& msg)
+        : _msg(msg)
+    {
+    }
+    virtual const char* what() const throw ()
+    {
+        return _msg.c_str();
+    }
+
+private:
+    std::string _msg;
+
+};
 
 /**
  * handlers holds the logic for serving an incoming request.
@@ -48,11 +83,15 @@ public:
 
     /**
      * set headers must be called before returning the result.
+     * @param rep the reply to set
      * @param type is the type of the message content and is equivalent to the
-     * @param file extension that would have been used if it was a file
-     * e.g. html, json, js
+     *        file extension that would have been used if it was a file
+     *        e.g. html, json, js
+     * @param is_ok when set to true set the rep to OK when false keep the
+     *        reply status
      */
-    virtual void set_headers(http::server::reply& rep, const std::string& type);
+    virtual void set_headers(http::server::reply& rep, const std::string& type,
+                             bool is_ok = true);
 
     /**
      * call set_headers with "html" as content type
@@ -146,7 +185,8 @@ public:
      * @param rep the reply
      * @return true on redirect
      */
-    bool redirect_if_needed(const http::server::request& req, http::server::reply& rep);
+    bool redirect_if_needed(const http::server::request& req,
+                            http::server::reply& rep);
 
     /**
      * A helper method that returns the file extension.
