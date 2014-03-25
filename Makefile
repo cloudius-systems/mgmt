@@ -7,12 +7,15 @@ all: mk-gradle httpserver.so swagger-ui-lib
 mk-gradle:
 	./gradlew --daemon build
 
-httpserver.so:
+httpserver.so: api/api-docs.json
 	make -C httpserver
 
 swagger-ui-lib: swagger-ui/dist
 
 swagger-ui/dist:
+	git submodule update --init -f
+
+api/api-docs.json:
 	git submodule update --init -f
 
 clean: clean-httpserver clean-gradle

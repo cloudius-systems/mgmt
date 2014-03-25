@@ -1,3 +1,6 @@
 [submodule "swagger-ui"]
 	path = swagger-ui
 	url = https://github.com/cloudius-systems/swagger-ui
+[submodule "api"]
+	path = api
+	url = https://github.com/cloudius-systems/osv-rest-api.git
