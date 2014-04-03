@@ -1,6 +1,6 @@
-[submodule "swagger-ui"]
-	path = swagger-ui
+[submodule "httpserver/swagger-ui"]
+	path = httpserver/swagger-ui
 	url = https://github.com/cloudius-systems/swagger-ui
-[submodule "api"]
-	path = api
-	url = https://github.com/cloudius-systems/osv-rest-api.git
+[submodule "httpserver/api-doc"]
+	path = httpserver/api-doc
+	url = https://github.com/cloudius-systems/osv-rest-api

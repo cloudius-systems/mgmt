@@ -16,13 +16,16 @@ import socket
 
 parser = argparse.ArgumentParser(description="""Testing the Httpserver""")
 
+module_base = os.path.join(os.path.realpath(os.path.dirname(__file__)), '..')
+osv_base = os.path.join(module_base, '..', '..')
+
 parser.add_argument('--connect', help='Connect to an existing image', action='store_true')
-parser.add_argument('--run_script', help='path to the run image script', default='scripts/run.py')
+parser.add_argument('--run_script', help='path to the run image script', default=os.path.join(osv_base, 'scripts', 'run.py'))
 parser.add_argument('--cmd', help='the command to execute',
                     default="/usr/mgmt/httpserver.so&"
                     "java.so io.osv.MultiJarLoader -mains /etc/javamains")
 parser.add_argument('--use_sudo', help='Use sudo with -n option instead of port forwarding', action='store_true')
-parser.add_argument('--jsondir', help='location of the json files', default='mgmt/api/listings/')
+parser.add_argument('--jsondir', help='location of the json files', default=os.path.join(module_base, 'api-doc/listings/'))
 parser.add_argument('--port', help='set the port number', type=int,
                     default=8000)
 parser.add_argument('--ip', help='set the ip address',
