@@ -1,9 +1,11 @@
 quiet = $(if $V, $1, @echo " $2"; $1)
 
-module: all
+module: crash
 
-all:
-	./gradlew --daemon build
+crash:
+	cd crash && mvn package
 
 clean:
-	$(call quiet, ./gradlew --daemon clean >> /dev/null, GRADLE CLEAN)
+	$(call quiet, cd crash && mvn clean, MVN CLEAN)
+
+.PHONY: crash clean module

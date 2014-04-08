@@ -1,4 +1,4 @@
-/usr/mgmt/crash-1.0.0.jar: ${OSV_BASE}/mgmt/crash/build/libs/crash-1.0.0.jar
+/usr/mgmt/crash-1.0.0.jar: ${OSV_BASE}/mgmt/crash/target/crash-1.0.0.jar
 /usr/mgmt/config/logging.properties: ${OSV_BASE}/mgmt/config/logging.properties
 /tools/ifconfig.so: ./tools/ifconfig/ifconfig.so
 /tools/lsroute.so: ./tools/route/lsroute.so

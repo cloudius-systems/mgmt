@@ -1,15 +1,2 @@
-web/vendor
-.bundle
-.gradle
-cli/build
-**/build
-web/bin/puck
-web/bin/puma
-web/bin/pumactl
-web/bin/rackup
-web/bin/rake
-web/bin/tilt
-web/bin/haml
-web/bin/mustache
-build
-gradle.properties
+# Maven targets
+**/target
