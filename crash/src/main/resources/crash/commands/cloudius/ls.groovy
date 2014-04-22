@@ -118,8 +118,13 @@ class ls extends OSvCommand implements Completer {
       def resolvedPath = path.file
       if (resolvedPath.isDirectory()) {
         def listFiles = resolvedPath.listFiles()
-        if (!listFiles) {
-          error("cannot open directory ${path.lbl}: Permission denied")
+        if (listFiles == null) {
+          def errmsg = "Permission denied"
+          if (resolvedPath.canRead() && resolvedPath.canExecute()) {
+            errmsg = "Unknown error"
+          }
+
+          error("cannot open directory ${path.lbl}: ${errmsg}")
           return ''
         }
 
@@ -211,8 +216,7 @@ class ls extends OSvCommand implements Completer {
   }
 
   private void error(String msg) {
-    // TODO: We don't have an err output
-    out.println("ls: " + msg)
+    err.println("ls: " + msg)
   }
 
   private static String modForPath(Object p) {
