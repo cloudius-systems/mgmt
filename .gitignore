@@ -1,2 +1,7 @@
 # Maven targets
 **/target
+
+# httpserver targets
+httpserver/autogen
+httpserver/obj
+httpserver/httpserver.so
