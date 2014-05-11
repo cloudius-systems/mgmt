@@ -59,6 +59,7 @@ public class perf {
 	    }
 	}
 	int line = 0;
+	try {
 	while (true) {
             if (line++ % 23 == 0) {
 	        for (int i = 0; i < names.length; i++) {
@@ -74,6 +75,11 @@ public class perf {
 	    out.print("\n");
 	    out.flush();
 	    Thread.sleep(1000);
+	}
+	} finally {
+	    for (int i = 0; i < names.length; i++) {
+	        counts[i].close();
+	    }
 	}
     }
 }
