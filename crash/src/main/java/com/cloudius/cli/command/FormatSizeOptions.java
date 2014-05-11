@@ -14,21 +14,21 @@ public class FormatSizeOptions {
 
   @Retention(RetentionPolicy.RUNTIME)
   @Usage("Display in kilobytes")
-  @Option(names={"b"})
+  @Option(names={"k"})
   @interface Kb { }
 
   @Retention(RetentionPolicy.RUNTIME)
   @Usage("Display in megabytes")
-  @Option(names={"b"})
+  @Option(names={"m"})
   @interface Mb { }
 
   @Retention(RetentionPolicy.RUNTIME)
   @Usage("Display in gigabytes")
-  @Option(names={"b"})
+  @Option(names={"g"})
   @interface Gb { }
 
   @Retention(RetentionPolicy.RUNTIME)
   @Usage("Human readable, scale to shortest unit")
-  @Option(names={"b"})
+  @Option(names={"H"})
   @interface Human { }
 }
