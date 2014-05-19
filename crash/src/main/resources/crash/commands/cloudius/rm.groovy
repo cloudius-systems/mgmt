@@ -22,10 +22,18 @@ class rm implements Completer {
     if (!file.exists()) {
       throw new ScriptException("no such file or directory")
     }
-    if (!file.delete()) {
-      throw new ScriptException("cannot delete file")
+    if (file.isDirectory()) {
+      if (!file.delete()) {
+        throw new ScriptException("cannot delete directory")
+      }
+      out.println("directory deleted")
     }
-    out.println("file deleted")
+    if (file.isFile()) {
+      if (!file.delete()) {
+        throw new ScriptException("cannot delete file")
+      }
+      out.println("file deleted")
+    }
   }
 
   @Override
