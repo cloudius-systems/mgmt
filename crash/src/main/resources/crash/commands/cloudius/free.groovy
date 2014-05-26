@@ -19,8 +19,8 @@ public class free extends OSvCommand {
       @FormatSizeOptions.Mb Boolean isMb,
       @FormatSizeOptions.Gb Boolean isGb,
       @FormatSizeOptions.Human Boolean isH) {
-    int total = Integer.parseInt(OSvAPI.get("/os/memory/total"))
-    int free  = Integer.parseInt(OSvAPI.get("/os/memory/free"))
+    long total = new BigInteger(OSvAPI.get("/os/memory/total")).longValue()
+    long free  = new BigInteger(OSvAPI.get("/os/memory/free")).longValue()
 
     def unit = SizeFormatter.toSizeUnit(isB, isKb, isMb, isGb, false, isH)
     def data = TextHelper.leftPadColumns([
