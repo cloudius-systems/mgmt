@@ -7,5 +7,6 @@ crash:
 
 clean:
 	$(call quiet, cd crash && mvn clean, MVN CLEAN)
+	$(call quiet, make -C httpserver clean, HTTP CLEAN)
 
 .PHONY: crash clean module
