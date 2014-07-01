@@ -9,6 +9,6 @@ class sleep {
   void main(
   @Required @Argument(completer = sleep.class) int time
   ) {
-    Thread.sleep(time)
+    Thread.sleep(time*1000)
   }
 }
