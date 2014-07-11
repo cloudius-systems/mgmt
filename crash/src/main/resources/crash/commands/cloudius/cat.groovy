@@ -9,36 +9,34 @@ import org.crsh.cli.descriptor.ParameterDescriptor
 import org.crsh.cli.spi.Completer
 import org.crsh.cli.spi.Completion
 
-// TODO: Allow multiple files to be specified
-
 class cat implements Completer {
   @Usage("concatenate files and print on standard output")
   @Command
   void main(
-  @Required @Argument(completer = cat.class) String path
+  @Required @Argument(completer = cat.class) List<String> paths
   ) {
-    file = getResolvedPath(path)
+    paths.each { path ->
+      file = getResolvedPath(path)
 
-    if (!file.exists()) {
-      throw new ScriptException("no such file or directory")
-    } else if (file.isDirectory()) {
-      throw new ScriptException("is a directory")
-    } else {
-      buffer = new BufferedReader(new FileReader(file))
-      try {
-        line = buffer.readLine()
-
-        while (line != null) {
-          out.print(line)
-          line = buffer.readLine()
-
-          // Print the new line only if we have more lines
-          if (line != null) {
-            out.println()
+      if (!file.exists()) {
+        err.println("cat: '${file}:' No such file or directory")
+        return
+      } else if (file.isDirectory()) {
+        err.println("cat: '${file}:' Is a directory")
+        return
+      } else {
+        buffer = new BufferedReader(new FileReader(file))
+        try {
+          character = buffer.read()
+          /* Read character by character, no need to worry
+           * about newlines or carriage returns */
+          while (character != -1) {
+            out.print((char)character)
+            character = buffer.read()
           }
+        } finally {
+          buffer.close()
         }
-      } finally {
-        buffer.close()
       }
     }
   }
