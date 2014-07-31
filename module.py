@@ -22,12 +22,8 @@ shell = run_java(
 # Some CLI commands depend on httpserver presence
 _httpserver_module = require('httpserver')
 
-_osvinit_module = require('osvinit')
-osvinit = _osvinit_module.default
-
 full = [
     shell,
-    osvinit,
 ]
 
 default = full
