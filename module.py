@@ -20,7 +20,7 @@ shell = run_java(
         ])
 
 # Some CLI commands depend on httpserver presence
-_httpserver_module = require('httpserver')
+_httpserver_module = require_running('httpserver')
 
 full = [
     shell,
