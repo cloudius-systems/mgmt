@@ -12,14 +12,6 @@
     <name>OSv Shell</name>
     <description>Java based shell for OSv</description>
 
-    <repositories>
-        <repository>
-            <id>cloudius</id>
-            <name>cloudius-releases</name>
-            <url>http://cloudius.artifactoryonline.com/cloudius/repo</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.crashub</groupId>
