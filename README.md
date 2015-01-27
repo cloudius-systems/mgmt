@@ -36,4 +36,4 @@ So there are two ways to execute it:
 
 ## CRaSH SSHD
 
-After launching CRaSH, you should be able to connect through SSH with admin/admin
+After launching CRaSH, you will need to configure an SSH key pair for authentication.
