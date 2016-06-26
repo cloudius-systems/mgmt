@@ -19,6 +19,7 @@ shell = run_java(
             '-jar', _crash_jar
         ])
 
+require('libtools')
 # Some CLI commands depend on httpserver presence
 _httpserver_module = require_running('httpserver')
 
